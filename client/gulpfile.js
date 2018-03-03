@@ -1,6 +1,7 @@
 let gulp = require('gulp')
 addsrc = require('gulp-add-src')
 cleanCSS = require('gulp-clean-css')
+sass = require('gulp-sass')
 concat = require('gulp-concat')
 inject = require('gulp-inject')
 webpack = require('gulp-webpack')
@@ -12,7 +13,7 @@ let paths = {
     src: 'src',
     entry: 'src/index.js',
     components: 'src/components/**/*.js',
-    styles: 'src/components/**/*.css',
+    styles: 'src/sass/index.scss',
     page: 'src/index.html',
     images: 'src/images/**/*',
     buildFolder: 'dist',
@@ -45,6 +46,7 @@ gulp.task('scripts', function () {
 
 gulp.task('styles', function () {
     return gulp.src(paths.styles)
+        .pipe(sass())
         .pipe(cleanCSS())
         .pipe(concat('app.bundle.css'))
         .pipe(gulp.dest(paths.buildStylesFolder))
