@@ -1,0 +1,60 @@
+.image-container {
+    height: 600px;
+    position: relative;
+    
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    #ci-1 {
+        background-image: url('../images/burger.jpeg')
+    }
+
+    #ci-2 {
+        background-image: url('../images/pizza.jpeg')
+    }
+
+    #ci-3 {
+        background-image: url('../images/chinese.jpeg')
+    }
+
+    .carousel-item {
+        height: 100%;
+
+        .carousel-image {
+            height: 100%;
+            background-position: center;
+            background-size: cover;
+        }
+    }    
+
+    .carousel-text {
+        position: absolute;
+        
+        left: 0;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        margin: auto;
+        z-index: 2;
+
+        color: $text-color;
+        text-align: center;
+        letter-spacing: 0.5rem;
+
+        h1 {
+            font-size: 5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+    }
+}
