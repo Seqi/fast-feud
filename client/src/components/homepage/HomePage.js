@@ -8,7 +8,7 @@ export default class HomePage extends React.Component {
         return (
             <div className="image-container">
                 <ImageCarousel />
-                <TitleText />
+                <TitleText locationChanged={this.props.locationChanged} />
             </div>
         )
     }

@@ -5,8 +5,11 @@ import shortid from 'shortid'
 
 export default class TitleText extends React.Component {
 
-    generateId() {
-        return shortid.generate()
+    constructor(props) {
+        super(props)
+        this.state = {
+            id: shortid.generate()
+        }
     }
 
     render() {
@@ -20,13 +23,15 @@ export default class TitleText extends React.Component {
                 <div className="carousel-search container">
                     <div className="row">
                         <div className="input-group">
-                            <input className="form-control carousel-input" placeholder="Enter your location" />
+                            <input className="form-control carousel-input"
+                                placeholder="Enter your location"
+                                onChange={evt => this.props.locationChanged(evt.target.value)} />
                             <div className="input-group-append">
-                                <button className="btn" type="submit">
-                                    <Link to={this.generateId()}>
+                                <Link to={this.state.id}>
+                                    <button className="btn" type="submit">
                                         Search
-                                    </Link>
-                                </button>
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     </div>

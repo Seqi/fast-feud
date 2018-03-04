@@ -75,15 +75,13 @@
                 text-align: center;
                 letter-spacing: 3px;
             }
-
+            
             button {
+                height: 100%;
                 padding-left: 30px;
                 padding-right: 30px;
-
-                 a{
-                    text-decoration: none;
-                    color: initial;
-                 }
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
             }
         }
     }
