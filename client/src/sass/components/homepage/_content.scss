@@ -1,5 +1,5 @@
 .image-container {
-    height: 600px;
+    height: 100vh;
     position: relative;
     
     &:after {
@@ -35,7 +35,7 @@
         }
     }    
 
-    .carousel-text {
+    .carousel-content {
         position: absolute;
         
         left: 0;
@@ -45,16 +45,41 @@
         margin: auto;
         z-index: 2;
 
-        color: $text-color;
-        text-align: center;
-        letter-spacing: 0.5rem;
+        .carousel-text {
+            padding-top: 50px;
+            padding-bottom: 50px;
 
-        h1 {
-            font-size: 5rem;
+            color: $text-color;
+            text-align: center;
+            letter-spacing: 0.5rem;
+    
+            h1 {
+                font-size: 5rem;
+            }
+    
+            h3 {
+                font-size: 1.5rem;
+            }
         }
 
-        h3 {
-            font-size: 1.5rem;
+        .carousel-search {
+            margin-left: auto;
+            margin-right: auto;
+
+            padding-left: 10px;
+            padding-right: 10px;
+
+
+            .carousel-input {
+                font-size: 1.5rem;
+                text-align: center;
+                letter-spacing: 3px;
+            }
+
+            button {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
         }
     }
 }

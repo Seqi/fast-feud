@@ -1,12 +1,14 @@
 import React from 'react'
 
-import Carousel from './Carousel'
+import HomePage from './homepage/HomePage'
+import Footer from './Footer'
 
 export default class App extends React.Component {
     render() {
         return (
             <div>
-                <Carousel />
+                <HomePage />
+                <Footer />
             </div>
         )
     }
