@@ -8,7 +8,8 @@ export default class TitleText extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: shortid.generate()
+            id: shortid.generate(),
+            location: ''
         }
     }
 
@@ -25,9 +26,12 @@ export default class TitleText extends React.Component {
                         <div className="input-group">
                             <input className="form-control carousel-input"
                                 placeholder="Enter your location"
-                                onChange={evt => this.props.locationChanged(evt.target.value)} />
+                                onChange={evt => this.setState({ location: evt.target.value })} />
                             <div className="input-group-append">
-                                <Link to={this.state.id}>
+                                <Link to={{ 
+                                    pathname: this.state.id, 
+                                    state: { location: this.state.location } 
+                                }}>
                                     <button className="btn" type="submit">
                                         Search
                                     </button>

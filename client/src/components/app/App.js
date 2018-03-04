@@ -5,7 +5,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                App works <span>{this.props.match.params.id}</span> for location <span>{this.props.location}</span>
+                App works <span>{this.props.match.params.id}</span> for location <span>{this.props.location.state.location}</span>
             </div>
         )
     }
