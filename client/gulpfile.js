@@ -129,6 +129,7 @@ gulp.task('serve', function () {
             port: 3100,
             livereload: true,
             open: true,
+            fallback: 'index.html'
         }))
 })
 
