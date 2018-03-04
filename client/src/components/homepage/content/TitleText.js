@@ -1,6 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
+import shortid from 'shortid'
 
 export default class TitleText extends React.Component {
+
+    generateId() {
+        return shortid.generate()
+    }
+
     render() {
         return (
             <div className="carousel-content">
@@ -14,7 +22,11 @@ export default class TitleText extends React.Component {
                         <div className="input-group">
                             <input className="form-control carousel-input" placeholder="Enter your location" />
                             <div className="input-group-append">
-                                <button class="btn" type="submit">Search</button>
+                                <button className="btn" type="submit">
+                                    <Link to={this.generateId()}>
+                                        Search
+                                    </Link>
+                                </button>
                             </div>
                         </div>
                     </div>
