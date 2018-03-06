@@ -1,0 +1,21 @@
+.business-container {
+    padding: 40px;
+
+    background-color: $accent-color;
+    color: $text-color;
+
+    h1 { 
+        margin-bottom: 0;
+    }
+
+    .business-rating {
+        padding-bottom: 20px;
+    }
+
+    .business-image {
+        height: 200px;
+        width: 600px;
+        background-position: center;
+        background-size: cover;
+    }
+}

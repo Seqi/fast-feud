@@ -8,7 +8,7 @@ router.get('/random', (req, res) => {
     yelputils.getRandomBusinessWithReviews(req.query)
         .then(business => res.json(business))
         .catch(err => {
-            console.log('Error getting random business with args ', req.query, err)
+            console.log('Error getting random business with args ', req.query, err.error)
             res.status(400).json(err.error)
         })
 })
