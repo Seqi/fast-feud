@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
     "font-awesome": "^4.7.0",
     "gulp-imagemin": "^4.1.0",

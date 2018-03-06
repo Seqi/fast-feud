@@ -17,8 +17,11 @@ let paths = {
     styles: 'src/sass/**/*.scss',
     page: 'src/index.html',
     images: 'src/images/**/*',
+    configDev: 'src/config/config.dev.json',
+    configProd: 'src/config/config.prod.json',
     buildFolder: 'dist',
     buildPage: 'dist/index.html',
+    buildConfig: 'dist/config',
     buildStylesFolder: 'dist/styles',
     buildStyles: 'dist/styles/**/*.css',
     buildJsFolder: 'dist/js',
@@ -90,7 +93,14 @@ gulp.task('html', function () {
         .pipe(gulp.dest(paths.buildFolder))
 })
 
-gulp.task('copy', gulp.parallel('scripts', 'html', 'styles', 'fonts', 'images'))
+gulp.task('config', function () {
+    return gulp.src(process.env.NODE_ENV === 'production' ?
+        paths.configProd :
+        paths.configDev)
+        .pipe(gulp.dest(paths.buildConfig))
+})
+
+gulp.task('copy', gulp.parallel('scripts', 'html', 'styles', 'fonts', 'images', 'config'))
 
 gulp.task('inject', function () {
     return gulp.src(paths.buildPage)
