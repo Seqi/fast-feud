@@ -1,7 +1,10 @@
 import React from 'react'
 import axios from 'axios'
 
-import Business from './Business'
+import Business from './business/Business'
+import Votes from './votes/Votes'
+import Options from './options/Options'
+import Chat from './chat/Chat'
 import Error from './Error'
 
 import config from '../../config'
@@ -43,13 +46,29 @@ export default class App extends React.Component {
     render() {
         return (
             <div className="app-container container">
-                <div class="row">
+                <div className="row">
                     {this.state.error ? <Error error={this.state.errorMessage} /> : null}
                 </div>
 
-                <div class="row">
-                    <div className="col-md-8">
-                        <Business business={this.state.business} />
+                <div className="row">
+                    <div className="col-md-8 col-sm-12">
+                        <Business refresh={() => this.fetch()} business={this.state.business} />
+                    </div>
+                    
+                    <div className="col-md-4 col-sm-12">
+                        <Votes />
+                    </div>                    
+                </div>
+
+                <div className="row">
+                    <div class="col-12">
+                        <Options />
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div class="col-12">
+                        <Chat />
                     </div>
                 </div>
             </div>

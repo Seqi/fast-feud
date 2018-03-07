@@ -14,7 +14,9 @@ export default class Business extends React.Component {
         console.log(business)
 
         return (
-            <div className="business-container">
+            <div className="business-container box">
+                <i class="fa fa-refresh fa-2x refresh-button" 
+                onClick={() => this.props.refresh()} />
                 <h1>{business.name}</h1>
 
                 <div className="business-rating">
