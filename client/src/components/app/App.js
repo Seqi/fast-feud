@@ -19,9 +19,10 @@ export default class App extends React.Component {
             error: false,
             errorMessage: null,
 
-            business: null,            
+            business: null,
             options: {
                 location: this.props.location.state.location,
+                price: null,
                 term: 'food',
                 open_now: false,
                 radius: 0
@@ -33,6 +34,7 @@ export default class App extends React.Component {
 
     fetch() {
         let query = Object.keys(this.state.options)
+            .filter(key => this.state.options[key] != null)
             .map(key => `${key}=${this.state.options[key]}`)
             .join('&')
 
@@ -51,7 +53,7 @@ export default class App extends React.Component {
     }
 
     setOptions(options) {
-        this.setState({options}, () => this.fetch())
+        this.setState({ options }, () => this.fetch())
     }
 
     // Don't update children if the options have changed as it does not 
@@ -71,15 +73,17 @@ export default class App extends React.Component {
                     <div className="col-md-8 col-sm-12">
                         <Business refresh={() => this.fetch()} business={this.state.business} />
                     </div>
-                    
+
                     <div className="col-md-4 col-sm-12">
                         <Votes />
-                    </div>                    
+                    </div>
                 </div>
 
                 <div className="row">
                     <div className="col-12">
-                        <Options options={this.state.options} setOptions={opts => this.setOptions(opts)}  />
+                        <Options 
+                            options={this.state.options}
+                            setOptions={opts => this.setOptions(opts)} />
                     </div>
                 </div>
 

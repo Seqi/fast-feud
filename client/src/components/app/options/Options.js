@@ -1,5 +1,7 @@
 import React from 'react'
 
+import ReactStars from 'react-stars'
+
 export default class Options extends React.Component {
 
     constructor(props) {
@@ -8,7 +10,7 @@ export default class Options extends React.Component {
         this.state = this.props.options
     }
 
-    setOption(evt) {        
+    setOption(evt) {
         let val = evt.target.type === 'checkbox' ? evt.target.checked : evt.target.value
         this.setState({ [evt.target.id]: val }, () => console.log('setting', this.state))
     }
@@ -34,6 +36,19 @@ export default class Options extends React.Component {
                             <input checked={this.state.open_now} id="open_now" onChange={evt => this.setOption(evt)} type="checkbox" />
                             <span className="checkmark"></span>
                         </label>
+                    </div>
+
+                    <div className="form-group col">
+                        <div className="stars">
+                            Price
+                            <ReactStars 
+                                half={false} 
+                                value={this.state.price} 
+                                onChange={price => this.setState({price})}
+                                size={20} 
+                                color1={'white'} 
+                                count={4} />
+                        </div>
                     </div>
                 </div>
 
