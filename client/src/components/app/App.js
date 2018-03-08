@@ -19,17 +19,24 @@ export default class App extends React.Component {
             error: false,
             errorMessage: null,
 
-            location: this.props.location.state.location,
-            business: null
+            business: null,            
+            options: {
+                location: this.props.location.state.location,
+                open_now: false,
+                radius: 0
+            }
         }
-
 
         this.fetch()
     }
 
 
     fetch() {
-        axios.get(`${config.apiUrl}/food/random?location=${this.state.location}`)
+        let query = Object.keys(this.state.options)
+            .map(key => `${key}=${this.state.options[key]}`)
+            .join('&')
+
+        axios.get(`${config.apiUrl}/food/random?${query}`)
             .then(result => {
                 this.setState({ business: result.data })
             })
@@ -41,6 +48,10 @@ export default class App extends React.Component {
                     })
                 }
             })
+    }
+
+    setOptions(options) {
+        this.setState({options}, () => this.fetch())
     }
 
     render() {
@@ -61,13 +72,13 @@ export default class App extends React.Component {
                 </div>
 
                 <div className="row">
-                    <div class="col-12">
-                        <Options />
+                    <div className="col-12">
+                        <Options setOptions={opts => this.setOptions(opts)}  />
                     </div>
                 </div>
 
                 <div className="row">
-                    <div class="col-12">
+                    <div className="col-12">
                         <Chat />
                     </div>
                 </div>
