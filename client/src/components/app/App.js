@@ -79,7 +79,7 @@ export default class App extends React.Component {
 
                 <div className="row">
                     <div className="col-12">
-                        <Options setOptions={opts => this.setOptions(opts)}  />
+                        <Options options={this.state.options} setOptions={opts => this.setOptions(opts)}  />
                     </div>
                 </div>
 
