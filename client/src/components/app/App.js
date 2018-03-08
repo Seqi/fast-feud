@@ -16,36 +16,58 @@ export default class App extends React.Component {
     constructor(props) {
         super(props)
 
+        let socket = io.connect(config.apiUrl, { query: `roomId=${this.props.match.params.id}` })
+
         this.state = {
             id: this.props.match.params.id,
             loading: true,
             error: false,
             errorMessage: null,
-
+            admin: false,
             business: null,
-            options: {
-                location: this.props.location.state.location,
-                price: null,
-                term: 'food',
-                open_now: false,
-                radius: 0
-            }
+            socket: socket
         }
 
-        this.fetch()
-
-        io.connect(config.apiUrl, {query: `roomId=${this.props.match.params.id}`})
+        this.initSocket()
     }
 
-    fetch() {
-        let query = Object.keys(this.state.options)
-            .filter(key => this.state.options[key] != null)
-            .map(key => `${key}=${this.state.options[key]}`)
-            .join('&')
+    initSocket() {
+        this.state.socket.on('connect', _ => {
+            console.log('connected')
+        })
 
-        axios.get(`${config.apiUrl}/food/random?${query}`)
+        this.state.socket.on('admin', admin => {
+            if (admin) {
+                console.log('Youre the admin!')
+                // Generate a set of options for the admin to configure
+                this.setState({
+                    admin: admin,
+                    options: {
+                        location: this.props.location.state.location,
+                        price: null,
+                        term: 'restaurant',
+                        open_now: null,
+                        radius: undefined
+                    }
+                })
+
+                // On first creation of the room, load the business
+                this.loadBusiness()
+            } else {
+                this.setState({ loading: false })
+            }
+        })
+
+        this.state.socket.on('business-updated', business => {
+            this.setState({business})
+        })
+    }
+
+    loadBusiness() {
+        this.fetch()
             .then(result => {
                 this.setState({ business: result.data, loading: false })
+                this.state.socket.emit('business', result.data)
             })
             .catch(error => {
                 if (error.response.data.error.description === 'Please specify a location or a latitude and longitude') {
@@ -57,14 +79,17 @@ export default class App extends React.Component {
             })
     }
 
-    setOptions(options) {
-        this.setState({ options }, () => this.fetch())
+    fetch() {
+        let query = Object.keys(this.state.options)
+            .filter(key => this.state.options[key] !== null && this.state.options[key] !== undefined)
+            .map(key => `${key}=${this.state.options[key]}`)
+            .join('&')
+
+        return axios.get(`${config.apiUrl}/food/random?${query}`)
     }
 
-    // Don't update children if the options have changed as it does not 
-    // affect child views
-    shouldComponentUpdate(nextProps, nextState) {
-        return this.state.options === nextState.options
+    setOptions(options) {
+        this.setState({ options }, () => this.loadBusiness())
     }
 
     render() {
@@ -84,7 +109,7 @@ export default class App extends React.Component {
 
                 <div className="row">
                     <div className="col-md-8 col-sm-12">
-                        <Business refresh={() => this.fetch()} business={this.state.business} />
+                        <Business refresh={() => this.loadBusiness()} business={this.state.business} />
                     </div>
 
                     <div className="col-md-4 col-sm-12">
@@ -92,13 +117,16 @@ export default class App extends React.Component {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-12">
-                        <Options 
-                            options={this.state.options}
-                            setOptions={opts => this.setOptions(opts)} />
+                {this.state.admin ? (
+                    <div className="row">
+                        <div className="col-12">
+                            <Options
+                                options={this.state.options}
+                                setOptions={opts => this.setOptions(opts)} />
+                        </div>
                     </div>
-                </div>
+                ) : null}
+
 
                 <div className="row">
                     <div className="col-12">
