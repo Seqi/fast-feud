@@ -13,6 +13,7 @@ let paths = {
     src: 'src',
     entry: 'src/index.js',
     components: 'src/components/**/*.js',
+    config: 'src/config/**/*.js',
     stylesEntry: 'src/sass/index.scss',
     styles: 'src/sass/**/*.scss',
     page: 'src/index.html',
@@ -135,7 +136,7 @@ gulp.task('serve', function () {
 
 gulp.task('watch', function () {
     gulp.watch(paths.styles, gulp.series('clean-styles', 'styles'))
-    gulp.watch([paths.entry, paths.components], gulp.series('build'))
+    gulp.watch([paths.entry, paths.components, paths.config], gulp.series('build'))
     gulp.watch(paths.page, gulp.series('html', 'inject'))
 })
 

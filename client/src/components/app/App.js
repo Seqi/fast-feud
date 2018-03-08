@@ -22,6 +22,7 @@ export default class App extends React.Component {
             business: null,            
             options: {
                 location: this.props.location.state.location,
+                term: 'food',
                 open_now: false,
                 radius: 0
             }
@@ -29,7 +30,6 @@ export default class App extends React.Component {
 
         this.fetch()
     }
-
 
     fetch() {
         let query = Object.keys(this.state.options)
@@ -52,6 +52,12 @@ export default class App extends React.Component {
 
     setOptions(options) {
         this.setState({options}, () => this.fetch())
+    }
+
+    // Don't update children if the options have changed as it does not 
+    // affect child views
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.options === nextState.options
     }
 
     render() {
