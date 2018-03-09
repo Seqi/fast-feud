@@ -31,6 +31,14 @@ export default class App extends React.Component {
         this.initSocket()
     }
 
+    getLocation() {
+        if (this.props.location && this.props.location.state) {
+            return this.props.location.state.location
+        } else {
+            return ''
+        }
+    }
+
     initSocket() {
         this.state.socket.on('connect', _ => {
             console.log('connected')
@@ -43,13 +51,16 @@ export default class App extends React.Component {
                 this.setState({
                     admin: admin,
                     options: {
-                        location: this.props.location.state.location,
+                        location: this.getLocation(),
                         price: null,
                         term: 'restaurant',
                         open_now: null,
                         radius: undefined
                     }
                 })
+
+                // Store the options on the socket
+                this.state.socket.emit('options', this.state.options)
 
                 // On first creation of the room, load the business
                 this.loadBusiness()
@@ -58,8 +69,17 @@ export default class App extends React.Component {
             }
         })
 
+        this.state.socket.on('admin-transfer', _ => {
+            console.log('Youre now the admin!')
+            this.setState({
+                admin: true
+            })
+        })
+
+        this.state.socket.on('options', options => this.setState({ options }))
+
         this.state.socket.on('business-updated', business => {
-            this.setState({business})
+            this.setState({ business })
         })
     }
 
@@ -70,12 +90,18 @@ export default class App extends React.Component {
                 this.state.socket.emit('business', result.data)
             })
             .catch(error => {
+                let errMessage
                 if (error.response.data.error.description === 'Please specify a location or a latitude and longitude') {
-                    this.setState({
-                        error: true,
-                        errorMessage: 'Could not find any restaurants within your location.'
-                    })
+                    errMessage = 'Could not find any restaurants within your location.'
+                } else {
+                    errMessage = 'An error occurred. Please refresh and try again or create a new room.'
                 }
+
+                this.setState({
+                    loading: false,
+                    error: true,
+                    errorMessage: errMessage
+                })
             })
     }
 
@@ -89,7 +115,10 @@ export default class App extends React.Component {
     }
 
     setOptions(options) {
-        this.setState({ options }, () => this.loadBusiness())
+        this.setState({ options }, () => {
+            this.state.socket.emit('options', this.state.options)
+            this.loadBusiness()
+        })
     }
 
     render() {
@@ -117,7 +146,7 @@ export default class App extends React.Component {
                     </div>
                 </div>
 
-                {this.state.admin ? (
+                {this.state.admin && this.state.options ? (
                     <div className="row">
                         <div className="col-12">
                             <Options

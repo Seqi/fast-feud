@@ -22,10 +22,6 @@ let server = http.listen(process.env.PORT || 4500, () => {
 io.on('connection', socket => {
     console.log('connected')
 
-    socket.on('disconnect', _ => {
-        let users = socketutils.getAllUsersInRoom(io, socket.roomName)
-    })
-
     socket.join(socket.handshake.query.roomId, err => {
         if (err) {
             return console.log('Error joining room ', err)
@@ -35,13 +31,15 @@ io.on('connection', socket => {
 
         // If no one is in the room, make admin
         let users = socketutils.getAllUsersInRoom(io, socket.roomName)
+        console.log(users)
         let isAdmin = users.length <= 1
 
         // Let the user know theyre an admin
         if (users.length <= 1) {
+            socket.isAdmin = true
             socket.emit('admin', true)
 
-        // If they're not an admin, send them the current business
+            // If they're not an admin, send them the current business
         } else {
             socket.emit('admin', false)
 
@@ -57,5 +55,30 @@ io.on('connection', socket => {
     socket.on('business', business => {
         socket.business = business
         socket.broadcast.to(socket.roomName).emit('business-updated', business)
+    })
+
+    socket.on('options', options => {
+        socket.options = options
+    })
+
+    socket.on('disconnect', _ => {
+        console.log('disconnected')
+
+        // If the admin disconnects, reassign admin role
+        if (socket.isAdmin) {
+            console.log('Admin is leaving. Reassigning')
+
+            let users = socketutils.getAllUsersInRoom(io, socket.roomName)
+            if (users.length > 0) {
+                let newAdminSocket = io.sockets.connected[users[0]]
+
+                // Pass through all the admin properties
+                newAdminSocket.business = socket.business
+                newAdminSocket.options = socket.options
+                newAdminSocket.isAdmin = true
+                newAdminSocket.emit('admin-transfer')
+                newAdminSocket.emit('options', socket.options)
+            }
+        }
     })
 })

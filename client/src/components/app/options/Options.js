@@ -10,6 +10,11 @@ export default class Options extends React.Component {
         this.state = this.props.options
     }
 
+    // Ensure that when we receive new options, we update the state
+    componentWillReceiveProps(nextProps) {
+        this.setState(nextProps.options)
+    }
+
     setOption(evt) {
         let val = evt.target.type === 'checkbox' ? 
             // Replace true values with null (sorry for double ternary :()
