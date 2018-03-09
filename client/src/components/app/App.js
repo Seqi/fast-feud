@@ -109,7 +109,7 @@ export default class App extends React.Component {
 
                 <div className="row">
                     <div className="col-md-8 col-sm-12">
-                        <Business refresh={() => this.loadBusiness()} business={this.state.business} />
+                        <Business canRefresh={this.state.admin} refresh={() => this.loadBusiness()} business={this.state.business} />
                     </div>
 
                     <div className="col-md-4 col-sm-12">

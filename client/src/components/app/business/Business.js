@@ -13,12 +13,15 @@ export default class Business extends React.Component {
 
         return (
             <div className="business-container box">
-                <i className="fa fa-refresh fa-2x refresh-button" 
-                onClick={() => this.props.refresh()} />
+                {
+                    this.props.canRefresh ? 
+                        (<i className="fa fa-refresh fa-2x refresh-button" onClick={() => this.props.refresh()} />) : null
+                }
+
                 <h1>{business.name}</h1>
 
                 <div className="business-rating">
-                    <ReactStars value={business.rating} color1={'transparent'} color2={'white'}  count={5} edit={false} />
+                    <ReactStars value={business.rating} color1={'transparent'} color2={'white'} count={5} edit={false} />
 
                     <div>
                         {business.price}
