@@ -11,10 +11,13 @@ export default class Options extends React.Component {
     }
 
     setOption(evt) {
-        let val = evt.target.type === 'checkbox' ? evt.target.checked : evt.target.value
-        this.setState({ [evt.target.id]: val }, () => console.log('setting', this.state))
+        let val = evt.target.type === 'checkbox' ? 
+            // Replace true values with null (sorry for double ternary :()
+            (evt.target.checked ? true : null)
+            : evt.target.value
+        this.setState({ [evt.target.id]: val })
     }
-
+    
     render() {
         return (
             <div className="options-container container">

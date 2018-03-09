@@ -11,8 +11,6 @@ export default class Business extends React.Component {
             return null
         }
 
-        console.log(business)
-
         return (
             <div className="business-container box">
                 <i className="fa fa-refresh fa-2x refresh-button" 
