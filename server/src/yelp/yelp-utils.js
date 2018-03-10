@@ -4,7 +4,7 @@ function yelpUtils(apiKey) {
     let yelp = new Yelp(apiKey)
 
     function getRandomBusinessWithReviews(query) {
-        return yelp.business({ ...query, limit: 50 })
+        return yelp.business({ ...query, limit: 50 })        
 
             // Random business 
             .then(res => {
@@ -17,7 +17,7 @@ function yelpUtils(apiKey) {
 
             // Get reviews
             .then(business => {
-                return yelp.review(business.id)
+                return yelp.review(encodeURIComponent(business.id))
                     .then(reviews => {
                         business.reviews = reviews
                         return business
