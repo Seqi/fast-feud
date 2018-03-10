@@ -1,0 +1,21 @@
+.reviews-container {
+    background-color: $accent-color;
+    color: $text-color;
+    padding: 40px;
+
+    height: 100%;
+    width: 100%;
+
+    .review-container {
+        width: 100%;
+
+        .review-username {
+            font-weight: 700;
+        }
+
+        div{
+            display: inline-flex;
+            float: right;
+        }
+    }
+}

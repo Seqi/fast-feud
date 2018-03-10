@@ -1,9 +1,10 @@
 import React from 'react'
 import axios from 'axios'
-import { PulseLoader } from 'halogenium'
 import io from 'socket.io-client'
+import { PulseLoader } from 'halogenium'
 
 import Business from './business/Business'
+import Reviews from './business/Reviews'
 import Votes from './votes/Votes'
 import Options from './options/Options'
 import Chat from './chat/Chat'
@@ -142,6 +143,12 @@ export default class App extends React.Component {
                     </div>
 
                     <div className="col-md-4 col-sm-12">
+                        <Reviews reviews={this.state.business.reviews.reviews} />
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
                         <Votes />
                     </div>
                 </div>
