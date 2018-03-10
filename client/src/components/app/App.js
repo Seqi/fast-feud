@@ -65,8 +65,6 @@ export default class App extends React.Component {
 
                 // On first creation of the room, load the business
                 this.loadBusiness()
-            } else {
-                this.setState({ loading: false })
             }
         })
 
@@ -81,6 +79,7 @@ export default class App extends React.Component {
 
         this.state.socket.on('business-updated', business => {
             this.setState({ business })
+            this.setState({ business, loading: false })
         })
     }
 
@@ -130,6 +129,7 @@ export default class App extends React.Component {
                 </div>
             )
         }
+        console.log(this.state.business)
 
         return (
             <div className="app-container container">

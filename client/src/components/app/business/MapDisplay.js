@@ -38,7 +38,6 @@ export default class MapDisplay extends React.Component {
     }
 
     render() {
-        console.log('rendering map')
         return (
             <GoogleMapReact bootstrapURLKeys={{ key: config.mapsApiKey }}
                 onGoogleApiLoaded={ mapsApi => this.setMapsApiAndMarkers(mapsApi)}

@@ -12,7 +12,6 @@ export default class Business extends React.Component {
         if (!business) {
             return null
         }
-        console.log(business)
 
         return (
             <div className="business-container box">
