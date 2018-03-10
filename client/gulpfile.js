@@ -49,8 +49,11 @@ gulp.task('scripts', function () {
                     {
                         test: /\.js$/,
                         exclude: /node_modules/,
-                        loader: "babel-loader"
-                    }
+                        loader: "babel-loader",
+                        options: {
+                            plugins: ['lodash']
+                        }
+                    },                    
                 ]
             }
         }))

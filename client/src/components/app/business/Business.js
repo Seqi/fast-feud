@@ -54,12 +54,12 @@ export default class Business extends React.Component {
                     </div>
                 </div>
 
-                <div className="business-image"
-                    style={{ backgroundImage: `url(${business.image_url})` }}>
+                <div className="business-map">
+                    <MapDisplay center={{ lat: business.coordinates.latitude, lng: business.coordinates.longitude }} zoom={16} />
                 </div>
 
-                <div className="business-map">
-                    <DisplayMap center={{ lat: business.coordinates.lat, lng: business.coordinates.lng }} zoom={6} />
+                <div className="business-image"
+                    style={{ backgroundImage: `url(${business.image_url})` }}>
                 </div>
             </div>
         )
