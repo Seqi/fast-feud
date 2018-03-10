@@ -133,9 +133,7 @@ export default class App extends React.Component {
 
         return (
             <div className="app-container container">
-                <div className="row">
-                    {this.state.error ? <Error error={this.state.errorMessage} /> : null}
-                </div>
+                {this.state.error ? <Error error={this.state.errorMessage} /> : null}
 
                 <div className="row">
                     <div className="col-md-8 col-sm-12">

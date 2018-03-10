@@ -5,8 +5,19 @@
     background-color: $accent-color;
     color: $text-color;
 
-    h1 { 
-        margin-bottom: 0;
+    
+    .title {
+        display: flex;
+
+        h1 { 
+            margin-bottom: 0;
+        }
+
+        .fa {            
+            margin-left: 5px;
+            margin-top: auto;
+            margin-bottom: 0;
+        }
     }
 
     .refresh-button {
@@ -29,6 +40,16 @@
 
     .business-rating {
         padding-bottom: 20px;
+
+        div:first-child {
+            display: inline-flex;
+        }
+
+        .tags {
+            >span:not(:last-child):after {
+                content: ', ',
+            }
+        }
     }
 
     .business-image {
