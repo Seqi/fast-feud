@@ -25,6 +25,7 @@ export default class App extends React.Component {
             error: false,
             errorMessage: null,
             admin: false,
+            voters: [],
             business: null,
             socket: socket
         }
@@ -80,6 +81,11 @@ export default class App extends React.Component {
         this.state.socket.on('business-updated', business => {
             this.setState({ business })
             this.setState({ business, loading: false })
+        })
+
+        this.state.socket.on('users-updated', users => {
+            console.log('users updated')
+            this.setState({voters: users})
         })
     }
 
@@ -147,7 +153,7 @@ export default class App extends React.Component {
 
                 <div className="row">
                     <div className="col">
-                        <Votes />
+                        <Votes voters={this.state.voters}/>
                     </div>
                 </div>
 

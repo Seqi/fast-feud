@@ -29,12 +29,12 @@ io.on('connection', socket => {
 
         socket.roomName = socket.handshake.query.roomId
 
-        // If no one is in the room, make admin
         let users = socketutils.getAllUsersInRoom(io, socket.roomName)
+        io.to(socket.roomName).emit('users-updated', users)
         console.log(users)
-        let isAdmin = users.length <= 1
 
-        // Let the user know theyre an admin
+        // If no one is in the room, make admin
+        let isAdmin = users.length <= 1
         if (users.length <= 1) {
             socket.isAdmin = true
             socket.emit('admin', true)
@@ -63,12 +63,14 @@ io.on('connection', socket => {
 
     socket.on('disconnect', _ => {
         console.log('disconnected')
+        let users = socketutils.getAllUsersInRoom(io, socket.roomName)
+        console.log(users)
+        socket.emit('users-updated', users)
 
         // If the admin disconnects, reassign admin role
         if (socket.isAdmin) {
             console.log('Admin is leaving. Reassigning')
 
-            let users = socketutils.getAllUsersInRoom(io, socket.roomName)
             if (users.length > 0) {
                 let newAdminSocket = io.sockets.connected[users[0]]
 
