@@ -45,6 +45,15 @@
             display: inline-flex;
         }
 
+        .price {
+            letter-spacing: 0.3em;
+
+            .price-pad {
+                color: $text-color;
+                opacity: 0.2;
+            }
+        }
+
         .tags {
             font-style: italic;
 

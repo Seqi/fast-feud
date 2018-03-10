@@ -6,6 +6,11 @@ import MapDisplay from './MapDisplay'
 
 export default class Business extends React.Component {
 
+    padPrice(price) {
+        let maxPrice = 4
+        return price[0].repeat(maxPrice - price.length)
+    }
+
     render() {
         let business = this.props.business
 
@@ -35,8 +40,8 @@ export default class Business extends React.Component {
 
                             <span>({business.review_count})</span>
 
-                            <div>
-                                {business.price}
+                            <div className="price">
+                                {business.price}<span className="price-pad">{this.padPrice(business.price)}</span>
                             </div>
 
                             <div className="tags">
