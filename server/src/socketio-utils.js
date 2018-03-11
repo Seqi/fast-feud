@@ -14,6 +14,7 @@ getAllUsersInSocketsRoom = (io, socket) => {
             let thisSocket = io.sockets.connected[id]
             return {
                 id, 
+                nickname: thisSocket.nickname,
                 vote: thisSocket.vote || false
             }
         })

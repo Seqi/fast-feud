@@ -1,8 +1,16 @@
 .votes-container {
-    padding: 40px;
+    padding: 20px;
 
     background-color: $accent-color;
     color: $text-color;
+
+    .votes-header {
+        display: flex;
+
+        form {
+            margin-left: auto;
+        }
+    }
 
     .row {
         &:not(:first-child) {

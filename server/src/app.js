@@ -85,6 +85,15 @@ io.on('connection', socket => {
         socket.broadcast.to(socket.roomName).emit('voters-updated', users)
     })
 
+    socket.on('set-nickname', nickname => {
+        console.log('set nickname', nickname)
+        socket.nickname = nickname
+        
+        // Send back new user list
+        let users = socketutils.getAllUsersInSocketsRoom(io, socket)
+        io.to(socket.roomName).emit('voters-updated', users)
+    })
+
     socket.on('disconnect', _ => {
         console.log('disconnected')
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)

@@ -4,9 +4,8 @@ export default class Vote extends React.Component {
 
     constructor(props) {
         super(props)
-
         this.state = {
-            vote: false,
+            vote: this.props.vote? this.props.vote.vote : false,
             isSelf: this.props.socket.id === this.props.vote.id
         }
     }
@@ -27,7 +26,7 @@ export default class Vote extends React.Component {
     render() {
         return (
             <div className="vote-container">
-                {this.props.vote.id} {this.state.isSelf ? ' (You)' : null}
+                {this.props.vote.nickname || this.props.vote.id} {this.state.isSelf ? ' (You)' : null}
 
                 <label className={this.state.isSelf ? 'check-container' : 'check-container disabled'}>
                     <input onChange={evt => this.changeVote(evt.target.checked)} checked={this.state.vote} id="vote" type="checkbox" />
