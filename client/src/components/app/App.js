@@ -79,17 +79,10 @@ export default class App extends React.Component {
         this.state.socket.on('options', options => this.setState({ options }))
 
         this.state.socket.on('business-updated', business => {
-            this.setState({ business })
             this.setState({ business, loading: false })
         })
 
-        this.state.socket.on('users-updated', users => {
-            console.log('users updated')
-            this.setState({ voters: users })
-        })
-
-        this.state.socket.on('votes-updated', voters => {
-            console.log('voters updated', voters)
+        this.state.socket.on('voters-updated', voters => {
             this.setState({ voters })
         })
     }
@@ -140,7 +133,6 @@ export default class App extends React.Component {
                 </div>
             )
         }
-        console.log(this.state.business)
 
         return (
             <div className="app-container container">

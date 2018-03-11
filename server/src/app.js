@@ -30,7 +30,7 @@ io.on('connection', socket => {
         socket.roomName = socket.handshake.query.roomId
 
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
-        io.to(socket.roomName).emit('users-updated', users)
+        io.to(socket.roomName).emit('voters-updated', users)
         console.log(users)
 
         // If no one is in the room, make admin
@@ -54,6 +54,17 @@ io.on('connection', socket => {
 
     socket.on('business', business => {
         socket.business = business
+
+        // Reset the votes
+        let ids = socketutils.getAllUserIdsInRoom(io, socket.roomName)
+        ids.forEach(id => {
+            let socket = io.sockets.connected[id]
+            socket.vote = false
+        })
+
+        let users = socketutils.getAllUsersInSocketsRoom(io, socket)
+
+        io.to(socket.roomName).emit('voters-updated', users)
         socket.broadcast.to(socket.roomName).emit('business-updated', business)
     })
 
@@ -71,14 +82,14 @@ io.on('connection', socket => {
 
         // Send back new votes
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
-        socket.broadcast.to(socket.roomName).emit('votes-updated', users)
+        socket.broadcast.to(socket.roomName).emit('voters-updated', users)
     })
 
     socket.on('disconnect', _ => {
         console.log('disconnected')
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
         console.log(users)
-        io.to(socket.roomName).emit('users-updated', users)
+        io.to(socket.roomName).emit('voters-updated', users)
 
         // If the admin disconnects, reassign admin role
         if (socket.isAdmin) {

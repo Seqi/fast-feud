@@ -11,6 +11,12 @@ export default class Business extends React.Component {
         return price[0].repeat(maxPrice - price.length)
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        // Only update if the properties have changed (prevents the map having
+        // to rerender if something irrelevant changes)
+        return JSON.stringify(nextProps) !== JSON.stringify(this.props)
+    }
+
     render() {
         let business = this.props.business
 

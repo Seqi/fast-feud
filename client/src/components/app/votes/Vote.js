@@ -12,7 +12,6 @@ export default class Vote extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('new state', nextProps)
         this.setState({
             isSelf: nextProps.socket.id === nextProps.vote.id,
             vote: nextProps.vote.vote
