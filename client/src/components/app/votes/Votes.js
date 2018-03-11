@@ -7,7 +7,7 @@ export default class Votes extends React.Component {
     convertVoterToCol(voters, i) {
         return (
             <div className="col-md-6">
-                <Vote key={i} vote={voters[i]} />
+                <Vote socket={this.props.socket} key={i} vote={voters[i]} />
             </div>
         )
     }
@@ -17,7 +17,7 @@ export default class Votes extends React.Component {
 
         for (let i = 0; i < voters.length; i += 2) {
             result.push(
-                (<div className="row">
+                (<div key={i} className="row">
                     { this.convertVoterToCol(voters, i) }
                     { voters[i + 1] ? this.convertVoterToCol(voters, i + 1) : null}
                 </div>)

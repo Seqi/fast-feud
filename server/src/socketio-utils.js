@@ -1,6 +1,6 @@
-getAllUsersInRoom = (io, roomName) => {
+getAllUserIdsInRoom = (io, roomName) => {
     let room = io.nsps['/'].adapter.rooms[roomName]
-    
+
     if (!room) {
         return []
     }
@@ -8,8 +8,19 @@ getAllUsersInRoom = (io, roomName) => {
     return Object.keys(room.sockets)
 }
 
-getRoomCurrentBusiness = (io, roomName)  => {
-    let users = getAllUsersInRoom(io, roomName)
+getAllUsersInSocketsRoom = (io, socket) => {
+    return getAllUserIdsInRoom(io, socket.roomName)
+        .map(id => {            
+            let thisSocket = io.sockets.connected[id]
+            return {
+                id, 
+                vote: thisSocket.vote || false
+            }
+        })
+}
+
+getRoomCurrentBusiness = (io, roomName) => {
+    let users = getAllUserIdsInRoom(io, roomName)
 
     for (let i = 0; i < users.length; i++) {
         let socket = io.sockets.connected[users[i]]
@@ -20,5 +31,6 @@ getRoomCurrentBusiness = (io, roomName)  => {
     }
 }
 
-module.exports.getAllUsersInRoom = getAllUsersInRoom
+module.exports.getAllUserIdsInRoom = getAllUserIdsInRoom
+module.exports.getAllUsersInSocketsRoom = getAllUsersInSocketsRoom
 module.exports.getRoomCurrentBusiness = getRoomCurrentBusiness

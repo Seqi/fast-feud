@@ -85,7 +85,12 @@ export default class App extends React.Component {
 
         this.state.socket.on('users-updated', users => {
             console.log('users updated')
-            this.setState({voters: users})
+            this.setState({ voters: users })
+        })
+
+        this.state.socket.on('votes-updated', voters => {
+            console.log('voters updated', voters)
+            this.setState({ voters })
         })
     }
 
@@ -153,7 +158,7 @@ export default class App extends React.Component {
 
                 <div className="row">
                     <div className="col">
-                        <Votes voters={this.state.voters}/>
+                        <Votes socket={this.state.socket} voters={this.state.voters} votes={this.state.votes} />
                     </div>
                 </div>
 

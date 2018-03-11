@@ -29,7 +29,7 @@ io.on('connection', socket => {
 
         socket.roomName = socket.handshake.query.roomId
 
-        let users = socketutils.getAllUsersInRoom(io, socket.roomName)
+        let users = socketutils.getAllUsersInSocketsRoom(io, socket)
         io.to(socket.roomName).emit('users-updated', users)
         console.log(users)
 
@@ -61,18 +61,31 @@ io.on('connection', socket => {
         socket.options = options
     })
 
+    socket.on('vote', vote => {
+        if (vote.id !== socket.id) {
+            socket.emit('error-occurred', 'Unauthorized.')
+        }
+
+        console.log('vote set')
+        socket.vote = vote.vote
+
+        // Send back new votes
+        let users = socketutils.getAllUsersInSocketsRoom(io, socket)
+        socket.broadcast.to(socket.roomName).emit('votes-updated', users)
+    })
+
     socket.on('disconnect', _ => {
         console.log('disconnected')
-        let users = socketutils.getAllUsersInRoom(io, socket.roomName)
+        let users = socketutils.getAllUsersInSocketsRoom(io, socket)
         console.log(users)
-        socket.emit('users-updated', users)
+        io.to(socket.roomName).emit('users-updated', users)
 
         // If the admin disconnects, reassign admin role
         if (socket.isAdmin) {
             console.log('Admin is leaving. Reassigning')
 
             if (users.length > 0) {
-                let newAdminSocket = io.sockets.connected[users[0]]
+                let newAdminSocket = io.sockets.connected[users[0].id]
 
                 // Pass through all the admin properties
                 newAdminSocket.business = socket.business
