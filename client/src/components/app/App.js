@@ -167,7 +167,7 @@ export default class App extends React.Component {
 
                 <div className="row">
                     <div className="col-12">
-                        <Chat />
+                        <Chat socket={this.state.socket} />
                     </div>
                 </div>
             </div>

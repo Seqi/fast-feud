@@ -8,6 +8,7 @@ export default class Business extends React.Component {
 
     padPrice(price) {
         let maxPrice = 4
+        console.log(price)
         return price[0].repeat(maxPrice - price.length)
     }
 

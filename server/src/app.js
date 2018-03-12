@@ -53,6 +53,7 @@ io.on('connection', socket => {
     })
 
     socket.on('business', business => {
+        console.log('Updating business')
         socket.business = business
 
         // Reset the votes
@@ -69,6 +70,7 @@ io.on('connection', socket => {
     })
 
     socket.on('options', options => {
+        console.log('setting options')
         socket.options = options
     })
 
@@ -88,10 +90,19 @@ io.on('connection', socket => {
     socket.on('set-nickname', nickname => {
         console.log('set nickname', nickname)
         socket.nickname = nickname
-        
+
         // Send back new user list
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
         io.to(socket.roomName).emit('voters-updated', users)
+    })
+
+    socket.on('message', msg => {
+        console.log('relaying message', msg)
+        io.to(socket.roomName).emit('message', {
+            id: socket.id,
+            nickname: socket.nickname,
+            message: msg
+        })
     })
 
     socket.on('disconnect', _ => {
