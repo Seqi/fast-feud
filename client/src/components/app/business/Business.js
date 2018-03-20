@@ -1,6 +1,8 @@
 import React from 'react';
 
 import ReactStars from 'react-stars'
+import iso from 'iso-countries'
+import getSymbolFromCurrencyMap from 'currency-symbol-map'
 
 import MapDisplay from './MapDisplay'
 
@@ -8,8 +10,21 @@ export default class Business extends React.Component {
 
     padPrice(price) {
         let maxPrice = 4
-        console.log(price)
-        return price[0].repeat(maxPrice - price.length)
+
+        let symbol = '$'
+        if (price) {
+            symbol = price[0]   
+        } else {
+            let country = iso.findCountryByCode(this.props.business.location.country)
+
+            if(country) {
+                // Default to dollars
+                symbol = getSymbolFromCurrencyMap(country.currency) || '$'
+            }            
+        }
+
+        let padCount = price ? price.length : 0
+        return symbol.repeat(maxPrice - padCount)
     }
 
     shouldComponentUpdate(nextProps, nextState) {
