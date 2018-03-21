@@ -13,6 +13,7 @@ export default class Votes extends React.Component {
     }
 
     convertVoterToCol(voters, i) {
+        console.log(voters[i])
         return (
             <div className="col-md-6">
                 <Vote socket={this.props.socket} key={i} vote={voters[i]} />

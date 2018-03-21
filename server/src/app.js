@@ -60,7 +60,7 @@ io.on('connection', socket => {
         let ids = socketutils.getAllUserIdsInRoom(io, socket.roomName)
         ids.forEach(id => {
             let socket = io.sockets.connected[id]
-            socket.vote = false
+            socket.vote = undefined
         })
 
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)

@@ -15,7 +15,7 @@ getAllUsersInSocketsRoom = (io, socket) => {
             return {
                 id, 
                 nickname: thisSocket.nickname,
-                vote: thisSocket.vote || false
+                vote: thisSocket.vote
             }
         })
 }
