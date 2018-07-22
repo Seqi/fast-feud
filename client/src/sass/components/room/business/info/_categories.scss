@@ -1,0 +1,7 @@
+.categories {
+    font-style: italic;
+
+    >span:not(:last-child):after {
+        content: ', ',
+    }
+}

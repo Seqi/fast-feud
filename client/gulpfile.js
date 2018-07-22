@@ -4,8 +4,8 @@ sass = require('gulp-sass')
 concat = require('gulp-concat')
 inject = require('gulp-inject')
 imagemin = require('gulp-imagemin')
-webpack = require('gulp-webpack')
 webserver = require('gulp-webserver')
+webpack = require('webpack-stream')
 
 let del = require('del')
 
@@ -41,10 +41,10 @@ gulp.task('clean-styles', function () {
 gulp.task('scripts', function () {
     return gulp.src(paths.entry)
         .pipe(webpack({
+            output: {
+                filename: 'app.bundle.js'
+            },
             module: {
-                output: {
-                    filename: 'app.bundle.js'
-                },
                 loaders: [
                     {
                         test: /\.js$/,
@@ -58,7 +58,7 @@ gulp.task('scripts', function () {
             }
         }))
         .pipe(gulp.src([
-            'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'node_modules/bootstrap/dist/js/bootstrap.min.js',            
             'node_modules/jquery/dist/jquery.min.js'
         ], { passthrough: true }))
         .pipe(gulp.dest(paths.buildJsFolder))
@@ -97,23 +97,19 @@ gulp.task('html', function () {
 gulp.task('copy', gulp.parallel('scripts', 'html', 'styles', 'fonts', 'images'))
 
 gulp.task('inject', function () {
-    return gulp.src(paths.buildPage)
-
+    return gulp.src(paths.buildPage)    
         // Make sure that scripts load in order
         .pipe(inject(gulp.src(paths.buildJquery), {
             relative: true,
             removeTags: true,
             starttag: '<!-- inject:jq -->'
         }))
-
         .pipe(inject(gulp.src(paths.buildBootstrap), {
             relative: true,
             removeTags: true,
             starttag: '<!-- inject:bs -->'
         }))
-
         .pipe(inject(gulp.src(paths.buildStyles), { relative: true }))
-
         .pipe(inject(gulp.src(paths.buildJs), {
             relative: true,
             removeTags: true,

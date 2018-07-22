@@ -5,12 +5,28 @@
 @import 'elements/checkbox.scss';
 
 @import 'components/homepage/content.scss';
-@import 'components/app/app.scss';
-@import 'components/app/business.scss';
-@import 'components/app/reviews.scss';
-@import 'components/app/votes.scss';
-@import 'components/app/options.scss';
-@import 'components/app/chat.scss';
-@import 'components/app/error.scss';
 
-@import 'components/footer.scss';
+@import 'components/room/error.scss';
+@import 'components/room/loader.scss';
+@import 'components/room/room.scss';
+
+@import 'components/room/business/business.scss';
+@import 'components/room/business/info/address.scss';
+@import 'components/room/business/info/business-info.scss';
+@import 'components/room/business/info/categories.scss';
+@import 'components/room/business/info/location.scss';
+@import 'components/room/business/info/price.scss';
+@import 'components/room/business/info/rating.scss';
+@import 'components/room/business/info/refresh.scss';
+@import 'components/room/business/info/title.scss';
+
+@import 'components/room/business/reviews/review-list.scss';
+@import 'components/room/business/reviews/review-item.scss';
+
+@import 'components/room/chat/chat.scss';
+@import 'components/room/chat/chat-log.scss';
+@import 'components/room/chat/chat-message.scss';
+@import 'components/room/chat/chat-entry.scss';
+
+@import 'components/room/options/options.scss';
+@import 'components/room/votes/votes.scss';
