@@ -16,25 +16,24 @@ app.use('/food', require('./routes/yelp.routes'))
 
 let server = http.listen(process.env.PORT || 4500, () => {
     let address = server.address()
-    console.log(`Listening on ${address.address}:${address.port}`)
+    console.log(`Listening on address ${address.address}:${address.port}`)
 })
 
 io.on('connection', socket => {
-    console.log('connected')
-
     socket.join(socket.handshake.query.roomId, err => {
         if (err) {
             return console.log('Error joining room ', err)
         }
 
+        // TODO: Use socket.io built in namespaces/rooms
         socket.roomName = socket.handshake.query.roomId
 
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
+
+        //TODO : User added/removed to only require one user adding/subtracting
         io.to(socket.roomName).emit('voters-updated', users)
-        console.log(users)
 
         // If no one is in the room, make admin
-        let isAdmin = users.length <= 1
         if (users.length <= 1) {
             socket.isAdmin = true
             socket.emit('admin', true)
@@ -53,7 +52,6 @@ io.on('connection', socket => {
     })
 
     socket.on('business', business => {
-        console.log('Updating business')
         socket.business = business
 
         // Reset the votes
@@ -65,21 +63,23 @@ io.on('connection', socket => {
 
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
 
+        console.log('business updated')
         io.to(socket.roomName).emit('voters-updated', users)
         socket.broadcast.to(socket.roomName).emit('business-updated', business)
     })
 
     socket.on('options', options => {
-        console.log('setting options')
+        console.log('setting options', options)
         socket.options = options
     })
 
     socket.on('vote', vote => {
+        // TODO: No need to send up socket id?
         if (vote.id !== socket.id) {
             socket.emit('error-occurred', 'Unauthorized.')
         }
 
-        console.log('vote set')
+        console.log('vote set', vote)
         socket.vote = vote.vote
 
         // Send back new votes
@@ -108,7 +108,6 @@ io.on('connection', socket => {
     socket.on('disconnect', _ => {
         console.log('disconnected')
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
-        console.log(users)
         io.to(socket.roomName).emit('voters-updated', users)
 
         // If the admin disconnects, reassign admin role

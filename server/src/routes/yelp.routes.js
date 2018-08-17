@@ -5,7 +5,6 @@ let config = require('../config')
 let yelputils = require('../yelp/yelp-utils')(config.yelp_apikey)
 
 router.get('/random', (req, res) => {
-    console.log(req.query)
     yelputils.getRandomBusinessWithReviews(req.query)
         .then(business => res.json(business))
         .catch(err => {

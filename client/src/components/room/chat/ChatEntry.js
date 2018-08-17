@@ -1,42 +1,46 @@
 import React from 'react'
 
-export default class ChatEntry extends React.Component {
+import { withSocket } from '../SocketContext'
 
-    constructor() {
-        super()
+class ChatEntry extends React.Component {
 
-        this.state = {
-            message: ''
-        }
-    }
+	constructor() {
+		super()
 
-    onMessageChange(evt){
-        this.setState({ message: evt.target.value })
-    }
+		this.state = {
+			message: ''
+		}
+	}
 
-    sendMessage(evt){
-        evt.preventDefault()
+	onMessageChange(evt){
+		this.setState({ message: evt.target.value })
+	}
 
-        this.props.socket.emit('message', this.state.message)
-        this.setState({message: ''})
-    }
+	sendMessage(evt){
+		evt.preventDefault()
 
-    render() {
-        return (
-            <form id="chat-entry" onSubmit={evt => this.sendMessage(evt)}>
-                <div className="input-row row">
-                    <div className="col-11 message-input">
-                        <input  className="form-control"
-                                value={this.state.message}
-                                onChange={evt => this.onMessageChange(evt)}
-                                placeholder="Type a message" />
-                    </div>
+		this.props.socket.emit('message', this.state.message)
+		this.setState({message: ''})
+	}
 
-                    <div className="col-1 message-send">
-                        <input className="form-control btn" type="submit" value="Send" />
-                    </div>
-                </div>
-            </form>
-        )
-    }
+	render() {
+		return (
+			<form id="chat-entry" onSubmit={evt => this.sendMessage(evt)}>
+				<div className="input-row row">
+					<div className="col-11 message-input">
+						<input  className="form-control"
+							value={this.state.message}
+							onChange={evt => this.onMessageChange(evt)}
+							placeholder="Type a message" />
+					</div>
+
+					<div className="col-1 message-send">
+						<input className="form-control btn" type="submit" value="Send" />
+					</div>
+				</div>
+			</form>
+		)
+	}
 }
+
+export default withSocket(ChatEntry)
