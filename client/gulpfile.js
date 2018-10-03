@@ -8,6 +8,7 @@ let webserver = require('gulp-webserver')
 let webpack = require('webpack-stream')
 
 let del = require('del')
+let path = require('path')
 
 let paths = {
 	src: 'src',
@@ -58,6 +59,12 @@ gulp.task('scripts', function() {
 							}
 						}
 					]
+				},
+				resolve: {
+					alias: {
+						'components': path.resolve('src', 'components'),
+						'config': path.resolve('src', 'config')
+					}
 				}
 			})
 		)

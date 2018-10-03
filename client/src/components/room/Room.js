@@ -1,14 +1,14 @@
 import React from 'react'
 import { Manager } from 'socket.io-client'
 
-import { SocketContext } from './SocketContext'
+import config from 'config'
+import { SocketContext } from 'components/room/SocketContext'
 
-import Business from './business/Business'
-import Votes from './votes/Votes'
-import Chat from './chat/Chat'
 import Error from './Error'
+import Chat from './chat/Chat'
+import Votes from './votes/Votes'
+import Business from './business/Business'
 
-import config from '../../config'
 
 export default class Room extends React.Component {
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 import Vote from './Vote'
 import SetNickname from './SetNickname'
-import { withSocket } from '../SocketContext'
+import { withSocket } from 'components/room/SocketContext'
 
 class Votes extends React.Component {
 

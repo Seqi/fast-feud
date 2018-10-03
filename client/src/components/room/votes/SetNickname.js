@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { withSocket } from '../SocketContext'
+import { withSocket } from 'components/room/SocketContext'
 
 class SetNickname extends React.Component {
 	constructor(props) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { withSocket } from '../SocketContext'
+import { withSocket } from 'components/room/SocketContext'
 
 class Vote extends React.Component {
 

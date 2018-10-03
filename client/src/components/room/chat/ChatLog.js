@@ -1,7 +1,7 @@
 import React from 'react'
 
+import { withSocket } from 'components/room/SocketContext'
 import ChatMessage from './ChatMessage'
-import { withSocket } from '../SocketContext'
 
 class ChatLog extends React.Component {
 
