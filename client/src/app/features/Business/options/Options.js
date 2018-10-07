@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactStars from 'react-stars'
 
-import { withSocket } from 'components/room/SocketContext'
+import { withSocket } from '@shared/hocs/SocketContext'
 
 export const DefaultOptions = {
 	location: '',

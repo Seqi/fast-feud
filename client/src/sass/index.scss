@@ -1,32 +1,31 @@
-@import 'variables/variables.scss';
+@import 'variables/variables';
+@import 'layout/layout';
+@import 'elements/checkbox';
 
-@import 'layout/layout.scss';
+@import 'app/core/homepage';
+@import 'app/core/room';
 
-@import 'elements/checkbox.scss';
+@import 'app/shared/error';
+@import 'app/shared/loader';
 
-@import 'components/homepage/content.scss';
+@import 'app/features/business/business.scss';
+@import 'app/features/business/info/address.scss';
+@import 'app/features/business/info/business-info.scss';
+@import 'app/features/business/info/categories.scss';
+@import 'app/features/business/info/location.scss';
+@import 'app/features/business/info/price.scss';
+@import 'app/features/business/info/rating.scss';
+@import 'app/features/business/info/refresh.scss';
+@import 'app/features/business/info/title.scss';
 
-@import 'components/room/error.scss';
-@import 'components/room/loader.scss';
-@import 'components/room/room.scss';
+@import 'app/features/business/options/options.scss';
 
-@import 'components/room/business/business.scss';
-@import 'components/room/business/options/options.scss';
-@import 'components/room/business/info/address.scss';
-@import 'components/room/business/info/business-info.scss';
-@import 'components/room/business/info/categories.scss';
-@import 'components/room/business/info/location.scss';
-@import 'components/room/business/info/price.scss';
-@import 'components/room/business/info/rating.scss';
-@import 'components/room/business/info/refresh.scss';
-@import 'components/room/business/info/title.scss';
+@import 'app/features/business/reviews/review-list.scss';
+@import 'app/features/business/reviews/review-item.scss';
 
-@import 'components/room/business/reviews/review-list.scss';
-@import 'components/room/business/reviews/review-item.scss';
+@import 'app/features/chat/chat.scss';
+@import 'app/features/chat/chat-log.scss';
+@import 'app/features/chat/chat-message.scss';
+@import 'app/features/chat/chat-entry.scss';
 
-@import 'components/room/chat/chat.scss';
-@import 'components/room/chat/chat-log.scss';
-@import 'components/room/chat/chat-message.scss';
-@import 'components/room/chat/chat-entry.scss';
-
-@import 'components/room/votes/votes.scss';
+@import 'app/features/votes/votes.scss';

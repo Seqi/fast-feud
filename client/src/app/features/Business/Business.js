@@ -1,13 +1,13 @@
 import React from 'react'
 import axios from 'axios'
 
-import config from 'config'
-import { withSocket } from 'components/room/SocketContext'
+import config from '@config'
+import { Loader } from '@shared/components'
+import { withSocket } from '@shared/hocs/SocketContext'
 
-import Loader from 'components/room/Loader'
-import ReviewList from './reviews/ReviewList'
-import BusinessDetails from './details/BusinessDetails'
-import Options, { DefaultOptions } from './options/Options'
+import ReviewList from './Reviews/ReviewList'
+import BusinessDetails from './Details/BusinessDetails'
+import Options, { DefaultOptions } from './Options/Options'
 
 class Business extends React.Component {
 	constructor(props) {

@@ -2,7 +2,7 @@ import React from 'react'
 
 import GoogleMapReact from 'google-map-react'
 
-import config from '../../../../config'
+import config from '@config'
 
 export default class Location extends React.Component {
 

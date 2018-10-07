@@ -62,8 +62,10 @@ gulp.task('scripts', function() {
 				},
 				resolve: {
 					alias: {
-						'components': path.resolve('src', 'components'),
-						'config': path.resolve('src', 'config')
+						'@core': path.resolve('src', 'app', 'core'),
+						'@features': path.resolve('src', 'app', 'features'),
+						'@shared': path.resolve('src', 'app', 'shared'),
+						'@config': path.resolve('src', 'config')
 					}
 				}
 			})
