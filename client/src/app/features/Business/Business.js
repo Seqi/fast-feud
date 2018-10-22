@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Loader } from '@shared/components'
+import { Loader, Error } from '@shared/components'
 import { withSocket } from '@shared/hocs/SocketContext'
 import { loadBusiness } from '@shared/services/business'
 
@@ -45,7 +45,7 @@ class Business extends React.Component {
 			.catch(error => {
 				this.setState({
 					error: true,
-					errorMessage: error
+					errorMessage: error.message
 				})
 			})		
 	}
@@ -54,6 +54,8 @@ class Business extends React.Component {
 		return (
 			// TODO: Add error component with callback to retry (load business)
 			<div className="container">
+				{ this.state.error && <Error error={this.state.errorMessage}></Error> }
+
 				<div className="row">
 					<div className="col">
 						{this.state.business ? 

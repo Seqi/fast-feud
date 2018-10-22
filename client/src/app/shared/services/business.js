@@ -13,7 +13,7 @@ export function loadBusiness(options) {
 				errMessage = 'Could not find any restaurants within your location.'
 			} else {
 				errMessage =
-					'An error occurred. Please refresh and try again or create a new room.'
+					'An error occurred. Please refresh and try again, reconfigure your options, or create a new room.'
 			}
 
 			throw new Error(errMessage)
