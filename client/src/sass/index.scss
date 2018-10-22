@@ -8,24 +8,30 @@
 @import 'app/shared/error';
 @import 'app/shared/loader';
 
-@import 'app/features/business/business.scss';
-@import 'app/features/business/info/address.scss';
-@import 'app/features/business/info/business-info.scss';
-@import 'app/features/business/info/categories.scss';
-@import 'app/features/business/info/location.scss';
-@import 'app/features/business/info/price.scss';
-@import 'app/features/business/info/rating.scss';
-@import 'app/features/business/info/refresh.scss';
-@import 'app/features/business/info/title.scss';
+// Business
+@import 'app/features/business/business';
+@import 'app/features/business/details/address';
+@import 'app/features/business/details/business-info';
+@import 'app/features/business/details/categories';
+@import 'app/features/business/details/location';
+@import 'app/features/business/details/price';
+@import 'app/features/business/details/rating';
+@import 'app/features/business/details/refresh';
+@import 'app/features/business/details/title';
 
-@import 'app/features/business/options/options.scss';
 
-@import 'app/features/business/reviews/review-list.scss';
-@import 'app/features/business/reviews/review-item.scss';
+@import 'app/features/business/reviews/review-list';
+@import 'app/features/business/reviews/review-item';
 
-@import 'app/features/chat/chat.scss';
-@import 'app/features/chat/chat-log.scss';
-@import 'app/features/chat/chat-message.scss';
-@import 'app/features/chat/chat-entry.scss';
+// Users
+@import 'app/features/users/users';
 
-@import 'app/features/votes/votes.scss';
+@import 'app/features/users/chat/chat-container';
+@import 'app/features/users/chat/chat-log';
+@import 'app/features/users/chat/chat-message';
+@import 'app/features/users/chat/chat-entry';
+
+@import 'app/features/users/votes/votes';
+
+// Options
+@import 'app/features/options/options';

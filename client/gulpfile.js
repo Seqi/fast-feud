@@ -13,7 +13,7 @@ let path = require('path')
 let paths = {
 	src: 'src',
 	entry: 'src/index.js',
-	components: 'src/components/**/*.js',
+	components: 'src/app/**/*.js',
 	config: 'src/config/**/*.js',
 	stylesEntry: 'src/sass/index.scss',
 	styles: 'src/sass/**/*.scss',

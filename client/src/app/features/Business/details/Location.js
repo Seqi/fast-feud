@@ -9,31 +9,29 @@ export default class Location extends React.Component {
 	constructor() {
 		super()
 
+		this.marker = null
 		this.state = {
-			mapsApi: null,
-			marker: null
+			mapsApi: null
 		}
 	}
 
-	// componentDidUpdate() {
-	// 	if (this.state.marker) {
-	// 		this.state.marker.setMap(null)
-	// 	}
-        
-	// 	this.setMarker(this.props.center)		
-	// }
+	componentDidUpdate() {
+		this.setMarker(this.props.center)		
+	}
 
 	setMapsApiAndMarkers(mapsApi) {
 		this.setState({ mapsApi }, () => this.setMarker(this.props.center))
 	}
 
-	setMarker(position) {
+	setMarker(position) {		
+		if (this.marker) {
+			this.marker.setMap(null)
+		}
+
 		let mapsApi = this.state.mapsApi
-		this.setState({
-			marker: new mapsApi.maps.Marker({
-				position,
-				map: mapsApi.map
-			})
+		this.marker = new mapsApi.maps.Marker({
+			position: position,
+			map: mapsApi.map
 		})
 	}
 

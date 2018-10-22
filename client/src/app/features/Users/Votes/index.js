@@ -3,3 +3,5 @@ import Vote from './Vote'
 import Votes from './Votes'
 
 export { SetNickname, Vote, Votes }
+
+export default Votes

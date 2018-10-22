@@ -7,7 +7,6 @@ import { withSocket } from '@shared/hocs/SocketContext'
 
 import ReviewList from './Reviews/ReviewList'
 import BusinessDetails from './Details/BusinessDetails'
-import Options, { DefaultOptions } from './Options/Options'
 
 class Business extends React.Component {
 	constructor(props) {
@@ -17,11 +16,9 @@ class Business extends React.Component {
 			business: null,
 			error: false,
 			errorMessage: null,
-			options: null
 		}
 
 		this.props.socket.on('business-updated', business => {
-			console.log('business updated')
 			this.setState({ business })
 		})
 	}
@@ -30,14 +27,8 @@ class Business extends React.Component {
 		// Admins will have the responsibility of loading the initial data
 		// First, set the default options using their location, then
 		// bring in the business based on those options
-		if (this.props.isAdmin) {
-			if (!this.state.options) {
-				this.setState({ options: {...DefaultOptions, location: this.props.location }}, () => {
-					if (!this.state.business) {
-						this.loadBusiness()
-					}
-				})
-			}
+		if (this.props.isAdmin && !this.state.business) {
+			this.loadBusiness()
 		}
 	}
 
@@ -54,7 +45,7 @@ class Business extends React.Component {
 		}
 
 		axios
-			.get(`${config.apiUrl}/food/random?${buildQuery(this.state.options)}`)
+			.get(`${config.apiUrl}/food/random?${buildQuery(this.props.options)}`)
 			.then(result => {
 				this.setState({
 					business: result.data,
@@ -78,29 +69,14 @@ class Business extends React.Component {
 					errorMessage: errMessage
 				})
 			})		
-	}	
-
-	setOptions(options, update = true) {
-		this.setState({options}, () => {
-			// Store the options on the socket
-			update || this.props.socket.emit('options', this.state.options)
-		})
 	}
 
 	render() {
 		return (
 			// TODO: Add error component with callback to retry (load business)
-			<div className="container">			
-				{this.props.isAdmin && this.state.options && (
-					<div className="row ignore-spacer">
-						<div className="col">
-							<Options options={this.state.options} setOptions={opts => this.setOptions(opts)} />
-						</div>
-					</div>
-				)}
-
+			<div className="container">
 				<div className="row">
-					<div className="col-md-8 col-sm-12">
+					<div className="col">
 						{this.state.business ? 
 							<BusinessDetails
 								canRefresh={this.props.isAdmin} 
@@ -109,8 +85,10 @@ class Business extends React.Component {
 							<div className="loading"><Loader /></div>
 						}
 					</div>
+				</div>
 
-					<div className="col-md-4 col-sm-12 review-col"> 
+				<div className="row ignore-spacer">
+					<div className="col review-col"> 
 						{this.state.business ? 
 							<ReviewList reviews={this.state.business.reviews.reviews} /> :
 							<div className="loading"><Loader /></div>

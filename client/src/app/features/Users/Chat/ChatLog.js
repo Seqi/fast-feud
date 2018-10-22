@@ -14,7 +14,17 @@ class ChatLog extends React.Component {
 
 		this.props.socket.on('message', message => {
 			this.setState({ chatLog: this.state.chatLog.concat(message) })
+			this.scrollToBottom()
 		})
+
+		this.props.socket.on('voters-updated', _ => {
+			this.scrollToBottom()
+		})
+	}
+
+	scrollToBottom() {
+		let chatlog = document.getElementsByClassName('chat-log')[0]
+		chatlog.scrollTop = chatlog.scrollHeight
 	}
     
 	render() {

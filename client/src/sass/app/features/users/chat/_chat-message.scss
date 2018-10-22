@@ -1,0 +1,12 @@
+.chat-message {
+    padding: 5px 10px;
+
+    &:nth-child(even) {
+        background-color: $secondary-color;
+    }
+
+    span {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+}

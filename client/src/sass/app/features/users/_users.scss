@@ -1,0 +1,34 @@
+.user-container {
+	display: flex;
+	flex-direction: column;
+	
+	padding-top: 50px;
+}
+
+.chat-panel {
+    display: flex;
+    flex: 1;	
+}
+
+@media (min-width: 1200px) {
+	.user-container {
+		height: 100%;
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 1199px) and (min-width: 769px) {
+	
+	.user-container {
+		height: 50%;
+		flex-direction: row;
+
+		.votes-panel {
+			width: 40%;
+		}
+
+		.chat-panel {
+			width: 60%;
+		}
+	}
+}

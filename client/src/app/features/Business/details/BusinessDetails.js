@@ -18,7 +18,7 @@ export default class BusinessDetails extends React.Component {
 				</div>
 
 				<div className="row ignore-spacer">
-					<div className="col">
+					<div className="col-10">
 						<Title name={this.props.business.name} isClosed={this.props.business.is_closed} />
 					</div>
 				</div>
@@ -35,12 +35,14 @@ export default class BusinessDetails extends React.Component {
 					</div>
 				</div>
 
-				<div className="business-map">
-					<Location center={{ lat: this.props.business.coordinates.latitude, lng: this.props.business.coordinates.longitude }} zoom={16} />
-				</div>
+				<div className="">
+					<div className="business-map no-gutters">
+						<Location center={{ lat: this.props.business.coordinates.latitude, lng: this.props.business.coordinates.longitude }} zoom={16} />
+					</div>
 
-				<div className="business-image"
-					style={{ backgroundImage: `url(${this.props.business.image_url})` }}>
+					<div className=" business-image"
+						style={{ backgroundImage: `url(${this.props.business.image_url})` }}>
+					</div>
 				</div>
 			</div>
 		)

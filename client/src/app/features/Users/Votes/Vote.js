@@ -44,7 +44,7 @@ class Vote extends React.Component {
 
 	renderOtherVotes() {
 		return (
-			<div className="votes user">
+			<div className="vote-options user">
 				{ this.renderUserVote() }
 			</div>
 		)
@@ -52,7 +52,7 @@ class Vote extends React.Component {
     
 	renderSelfVotes() {
 		return (
-			<div className="votes">
+			<div className="vote-options">
 				<i onClick={() => this.changeVote(true)} className="fa fa-check"></i>
 				<i onClick={()  => this.changeVote(false)} className="fa fa-close"></i>
 			</div>
@@ -70,7 +70,9 @@ class Vote extends React.Component {
 	render() {
 		return (
 			<div className="vote-container">
-				{this.props.vote.nickname || this.props.vote.id} {this.state.isSelf ? ' (You)' : null}
+				<span className={this.state.isSelf ? 'self' : undefined}>
+					{this.props.vote.nickname || this.props.vote.id}
+				</span>
 
 				{ this.renderVoteOptions() }
 			</div>

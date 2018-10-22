@@ -5,5 +5,4 @@ import ChatMessage from './ChatMessage'
 
 export { ChatContainer, ChatEntry, ChatLog, ChatMessage }
 
-const Chat = ChatContainer
-export default Chat
+export default ChatContainer

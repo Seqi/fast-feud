@@ -5,22 +5,22 @@ import config from '@config'
 import { Error } from '@shared/components'
 import { SocketContext } from '@shared/hocs/SocketContext'
 
-import Chat from '@features/Chat'
-import Votes from '@features/Votes/Votes'
 import Business from '@features/Business/Business'
+import Options, { DefaultOptions } from '@features/Options/Options'
+import Users from '@features/Users/Users'
 
 export default class Room extends React.Component {
 
 	constructor(props) {
 		super(props)
 
-		console.log('room constructor')
 		let socketManager = new Manager(config.apiUrl, { autoConnect: false,  query: `roomId=${this.props.match.params.id}` })
 
 		this.state = {
 			id: this.props.match.params.id,
-			admin: false,
-			socket: socketManager.socket('/')
+			isAdmin: false,
+			socket: socketManager.socket('/'),
+			options: { ...DefaultOptions, location: this.getLocation() }
 		}
 
 		this.initSocket()
@@ -49,7 +49,7 @@ export default class Room extends React.Component {
 				console.log('Youre the admin!')
 				// Generate a set of options for the admin to configure
 				this.setState({
-					admin: true
+					isAdmin: true
 				})
 			}
 		})
@@ -57,33 +57,39 @@ export default class Room extends React.Component {
 		this.state.socket.on('admin-transfer', () => {
 			console.log('Youre now the admin!')
 			this.setState({
-				admin: true
+				isAdmin: true
 			})
-		})		
+		})
+	}
+
+	setOptions(options, update = true) {
+		this.setState({options}, () => {
+			// Store the options on the socket
+			update || this.props.socket.emit('options', this.state.options)
+		})
 	}
 
 	render() {
-		console.log('rendering room')
 		return (
-			<div className="app-container container">
+			<div className="app-container container-fluid">
 				{this.state.error ? <Error error={this.state.errorMessage} /> : null}
 
 				<SocketContext.Provider value={this.state.socket}>
-					<div className="row">
-						<Business isAdmin={this.state.admin} location={this.getLocation()} />
-					</div>
+					<div className="row no-gutters ignore-spacer">
+						<div className="col-xl business-panel">
+							<Business isAdmin={this.state.isAdmin} options={this.state.options} />						
+						</div>
 
-					<div className="row">
-						<div className="col">
-							<Votes />
+						<div className="col-xl-2 user-panel">
+							<Users />
 						</div>
 					</div>
 
-					<div className="row">
-						<div className="col">
-							<Chat />
+					{this.state.isAdmin && this.state.options && (
+						<div className="options-panel">
+							<Options options={this.state.options} setOptions={opts => this.setOptions(opts)} />
 						</div>
-					</div>
+					)}
 				</SocketContext.Provider>
 			</div>
 		)

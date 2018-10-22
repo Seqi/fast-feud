@@ -8,10 +8,10 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<BrowserRouter>
-				<div>
+				<React.Fragment>
 					<Route exact path='/' component={HomePage} />
 					<Route exact path='/:id' component={Room} />
-				</div>
+				</React.Fragment>
 			</BrowserRouter>
 		)
 	}
