@@ -1,9 +1,8 @@
 import React from 'react'
-import axios from 'axios'
 
-import config from '@config'
 import { Loader } from '@shared/components'
 import { withSocket } from '@shared/hocs/SocketContext'
+import { loadBusiness } from '@shared/services/business'
 
 import ReviewList from './Reviews/ReviewList'
 import BusinessDetails from './Details/BusinessDetails'
@@ -33,19 +32,7 @@ class Business extends React.Component {
 	}
 
 	loadBusiness() {
-		let buildQuery = function(options) {
-			return Object.keys(options)
-				.filter(
-					key =>
-						options[key] !== null &&
-						options[key] !== undefined
-				)
-				.map(key => `${key}=${options[key]}`)
-				.join('&')
-		}
-
-		axios
-			.get(`${config.apiUrl}/food/random?${buildQuery(this.props.options)}`)
+		loadBusiness(this.props.options)
 			.then(result => {
 				this.setState({
 					business: result.data,
@@ -56,17 +43,9 @@ class Business extends React.Component {
 				this.props.socket.emit('business', result.data)
 			})
 			.catch(error => {
-				let errMessage
-				if (error.response.data.error.description === 'Please specify a location or a latitude and longitude') {
-					errMessage = 'Could not find any restaurants within your location.'
-				} else {
-					errMessage = 'An error occurred. Please refresh and try again or create a new room.'
-				}
-
 				this.setState({
-					business: null,
 					error: true,
-					errorMessage: errMessage
+					errorMessage: error
 				})
 			})		
 	}
