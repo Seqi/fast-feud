@@ -8,7 +8,7 @@ export const DefaultOptions = {
 	price: null,
 	term: 'restaurant',
 	open_now: null,
-	radius: undefined
+	radius: null
 }
 
 // TODO: Notify of unsaved changes
@@ -37,20 +37,33 @@ class Options extends React.Component {
 	}
 
 	setOption(evt) {
+		let val
+
 		// If the checkbox is false, set null
 		// This stops the query item being set to false
 		// rather than just ignoring
-		let val =
-			evt.target.type === 'checkbox'
-				? evt.target.checked
-					? true
-					: null
-				: evt.target.value
+		if (evt.target.type === 'checkbox') {
+			val = evt.target.checked ? true : null
+		} else {
+			val = evt.target.value
+		}
 		this.setState({ [evt.target.id]: val })
 	}
 
 	toggleOptions() {
 		this.setState({showOptions: !this.state.showOptions })
+	}
+
+	isStateValid() {
+		return this.isLocationValid() && this.isRadiusValid()
+	}
+
+	isLocationValid() {
+		return this.state.location.length > 0
+	}
+
+	isRadiusValid() {
+		return this.state.radius >= 0
 	}
 
 	render() {
@@ -65,7 +78,7 @@ class Options extends React.Component {
 								type="text"
 								value={this.state.location}
 								onChange={evt => this.setOption(evt)}
-								className="form-control"
+								className={`form-control ${this.isLocationValid() ? '' : 'error'}`}
 							/>
 						</div>
 
@@ -75,8 +88,9 @@ class Options extends React.Component {
 								id="radius"
 								value={this.state.radius || ''}
 								type="number"
+								min="0"								
 								onChange={evt => this.setOption(evt)}
-								className="form-control"
+								className={`form-control ${this.isRadiusValid() ? '' : 'error'}`}
 							/>
 						</div>
 					</div>
@@ -117,7 +131,8 @@ class Options extends React.Component {
 								className="btn"
 								type="button"
 								value="Save"
-								onClick={() => this.props.setOptions(this.state)}
+								disabled={!this.isStateValid()} 
+								onClick={() => this.toggleOptions() && this.props.setOptions(this.state)}
 							/>
 						</div>
 					</div>
