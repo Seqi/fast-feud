@@ -52,6 +52,9 @@ class Options extends React.Component {
 
 	toggleOptions() {
 		this.setState({showOptions: !this.state.showOptions })
+
+		// Return true so we can method chain in the JSX, kinda hacky
+		return true
 	}
 
 	isStateValid() {

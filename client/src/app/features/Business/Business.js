@@ -26,7 +26,7 @@ class Business extends React.Component {
 		// Admins will have the responsibility of loading the initial data
 		// First, set the default options using their location, then
 		// bring in the business based on those options
-		if (this.props.isAdmin && !this.state.business) {
+		if (this.props.isAdmin && !this.state.business && !this.state.error) {
 			this.loadBusiness()
 		}
 	}
