@@ -44,14 +44,13 @@ export default class Room extends React.Component {
 			console.log('connected')
 		})
 
-		this.state.socket.on('admin', admin => {
-			if (admin) {
+		this.state.socket.on('admin', isAdmin => {
+			if (isAdmin) {
 				console.log('Youre the admin!')
-				// Generate a set of options for the admin to configure
-				this.setState({
-					isAdmin: true
-				})
 			}
+
+			// Generate a set of options for the admin to configure
+			this.setState({ isAdmin })
 		})
 
 		this.state.socket.on('admin-transfer', () => {
