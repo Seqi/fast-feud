@@ -1,7 +1,8 @@
 import SetNickname from './SetNickname'
-import Vote from './Vote'
+import SelfVote from './SelfVote'
+import GuestVote from './GuestVote'
 import Votes from './Votes'
 
-export { SetNickname, Vote, Votes }
+export { SetNickname, SelfVote, GuestVote, Votes }
 
 export default Votes

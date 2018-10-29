@@ -17,20 +17,31 @@
       display: flex;
       line-height: 35px;
       width: auto;
+      
+      &.self {
+        font-weight: 700;
 
+        .vote-options {
+          .fa-check {
+            color: green;
+          }
+
+          .fa-close {
+            color: red;
+          }
+        }
+      }
+      
       span {
         margin-left: auto;
         margin-right: 0;
         word-break: break-all;
         text-align: right;
 
-        &.self {
-          font-weight: 700;
-        }
       }
 
       .vote-options {
-        min-width: 70px;
+        min-width: 35px;
         font-size: 1.6rem;
 
         i {

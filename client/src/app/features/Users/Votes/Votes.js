@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { withSocket } from '@shared/hocs/SocketContext'
-import Vote from './Vote'
+import SelfVote from './SelfVote'
+import GuestVote from './GuestVote'
 import SetNickname from './SetNickname'
 
 class Votes extends React.Component {
@@ -17,6 +18,10 @@ class Votes extends React.Component {
 		})
 	}
 
+	isSelf(voter) {
+		return voter.id === this.props.socket.id
+	}
+
 	render() {
 		return (
 			<div className="votes-container">
@@ -28,9 +33,11 @@ class Votes extends React.Component {
 				</div>
 				
 				<div className="votes">
-					{this.state.voters.map(voter => (
-						<Vote key={voter.id} vote={voter} />
-					))}
+					{this.state.voters.map(voter => 
+						this.isSelf(voter) ? 
+							<SelfVote key={voter.id} vote={voter} /> : 
+							<GuestVote key={voter.id} vote={voter} />
+					)}
 				</div>
 			</div>
 		)
