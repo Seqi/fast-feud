@@ -26,7 +26,7 @@ export default class HomePage extends React.Component {
 
 					<div className="home-search container">
 						<div className="row">
-							<div className="input-group">
+							<form className="input-group">
 								<input className="form-control home-input"
 									placeholder="Enter your location"
 									onChange={evt => this.setState({ location: evt.target.value })} />
@@ -41,7 +41,7 @@ export default class HomePage extends React.Component {
 										</button>
 									</Link>
 								</div>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>
