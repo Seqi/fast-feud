@@ -15,10 +15,16 @@ class Business extends React.Component {
 			business: null,
 			error: false,
 			errorMessage: null,
+			errorRetryAction: null
 		}
 
 		this.props.socket.on('business-updated', business => {
-			this.setState({ business })
+			this.setState({ 
+				business: business,				
+				error: false,
+				errorMessage: null,
+				errorRetryAction: null
+			})
 		})
 	}
 
@@ -32,7 +38,8 @@ class Business extends React.Component {
 			} else {				
 				this.setState({
 					error: true,
-					errorMessage: 'Please wait for an admin to correctly configure their search options.'
+					errorMessage: 'Please wait for an admin to correctly configure their search options.',
+					errorRetryAction: null
 				})
 			}
 		}
@@ -44,7 +51,8 @@ class Business extends React.Component {
 				this.setState({
 					business: result.data,
 					error: false,
-					errorMessage: null
+					errorMessage: null,
+					errorRetryAction: null
 				})
 
 				this.props.socket.emit('business', result.data)
@@ -52,16 +60,16 @@ class Business extends React.Component {
 			.catch(error => {
 				this.setState({
 					error: true,
-					errorMessage: error.message
+					errorMessage: error.message,
+					errorRetryAction: this.state.business ? null : () => this.loadBusiness()
 				})
 			})		
 	}
 
 	render() {
 		return (
-			// TODO: Add error component with callback to retry (load business)
 			<div className="container">
-				{ this.state.error && <Error error={this.state.errorMessage}></Error> }
+				{ this.state.error && <Error error={this.state.errorMessage} retryAction={this.state.errorRetryAction}></Error> }
 
 				<div className="row">
 					<div className="col">
