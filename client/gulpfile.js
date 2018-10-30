@@ -156,6 +156,13 @@ gulp.task('inject', function() {
 
 gulp.task('build', gulp.series('clean', 'copy', 'inject'))
 
+gulp.task('set prod', function(done) {
+	process.env.NODE_ENV = 'production'
+	done()
+})
+
+gulp.task('prod', gulp.series('set prod', 'build'))
+
 gulp.task('serve', function() {
 	return gulp.src(paths.buildFolder).pipe(
 		webserver({
