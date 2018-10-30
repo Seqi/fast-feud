@@ -7,6 +7,7 @@ let http = require('http').createServer(app)
 let io = socketio(http)
 
 let socketutils = require('./socketio-utils')
+let log = require('./log')
 
 app.use(cors({
     credentials: true,
@@ -16,17 +17,19 @@ app.use('/food', require('./routes/yelp.routes'))
 
 let server = http.listen(process.env.PORT || 4500, () => {
     let address = server.address()
-    console.log(`Listening on address ${address.address}:${address.port}`)
+    log(null, `Listening on address ${address.address}:${address.port}`)
 })
 
 io.on('connection', socket => {
     socket.join(socket.handshake.query.roomId, err => {
-        if (err) {
-            return console.log('Error joining room ', err)
-        }
-
         // TODO: Use socket.io built in namespaces/rooms
         socket.roomName = socket.handshake.query.roomId
+
+        if (err) {
+            return log(socket, `Error joining room:  ${err}`)
+        }
+
+        log(socket, 'New connection.')
 
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
 
@@ -37,6 +40,7 @@ io.on('connection', socket => {
         if (users.length <= 1) {
             socket.isAdmin = true
             socket.emit('admin', true)
+            log(socket, 'Setting as admin.')
 
             // If they're not an admin, send them the current business
         } else {
@@ -53,6 +57,7 @@ io.on('connection', socket => {
 
     socket.on('business', business => {
         socket.business = business
+        log(socket, `New business: ${business.alias}`)
 
         // Reset the votes
         let ids = socketutils.getAllUserIdsInRoom(io, socket.roomName)
@@ -63,13 +68,12 @@ io.on('connection', socket => {
 
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
 
-        console.log('business updated')
         io.to(socket.roomName).emit('voters-updated', users)
         socket.broadcast.to(socket.roomName).emit('business-updated', business)
     })
 
     socket.on('options', options => {
-        console.log('setting options', options)
+        log(socket, `New options received: ${options}`)
         socket.options = options
     })
 
@@ -79,8 +83,8 @@ io.on('connection', socket => {
             socket.emit('error-occurred', 'Unauthorized.')
         }
 
-        console.log('vote set', vote)
         socket.vote = vote.vote
+        log(socket, `New vote: ${vote}`)
 
         // Send back new votes
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
@@ -88,8 +92,8 @@ io.on('connection', socket => {
     })
 
     socket.on('set-nickname', nickname => {
-        console.log('set nickname', nickname)
         socket.nickname = nickname
+        log(socket, `Setting new nickname: ${nickname}`)
 
         // Send back new user list
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
@@ -97,7 +101,7 @@ io.on('connection', socket => {
     })
 
     socket.on('message', msg => {
-        console.log('relaying message', msg)
+        log(socket, 'New message sent.')
         io.to(socket.roomName).emit('message', {
             id: socket.id,
             nickname: socket.nickname,
@@ -106,7 +110,7 @@ io.on('connection', socket => {
     })
 
     socket.on('disconnect', _ => {
-        console.log('disconnected')
+        log(socket, 'Disconnected')
         let users = socketutils.getAllUsersInSocketsRoom(io, socket)
         io.to(socket.roomName).emit('voters-updated', users)
 
