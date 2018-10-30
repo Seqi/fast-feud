@@ -18,11 +18,23 @@ class Votes extends React.Component {
 		})
 	}
 
+	get self() {
+		return this.state.voters.find(voter => voter.id === this.props.socket.id)
+	}
+
+	get others() {
+		return this.state.voters.filter(voter => voter.id !== this.props.socket.id)
+	}
+
 	isSelf(voter) {
 		return voter.id === this.props.socket.id
 	}
 
 	render() {
+		if (this.state.voters.length < 1) {
+			return null
+		}
+
 		return (
 			<div className="votes-container">
 				<div className="votes-header">
@@ -33,10 +45,10 @@ class Votes extends React.Component {
 				</div>
 				
 				<div className="votes">
-					{this.state.voters.map(voter => 
-						this.isSelf(voter) ? 
-							<SelfVote key={voter.id} vote={voter} /> : 
-							<GuestVote key={voter.id} vote={voter} />
+					<SelfVote vote={this.self} /> 
+
+					{this.others.map(voter => 
+						<GuestVote key={voter.id} vote={voter} />
 					)}
 				</div>
 			</div>
