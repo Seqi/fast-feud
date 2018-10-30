@@ -32,8 +32,7 @@ class ChatEntry extends React.Component {
 					placeholder="Type a message"
 				/>
 
-				{/* TODO: Disable if no message entered */}
-				<input className="form-control btn" type="submit" value="Send" />
+				<input disabled={!this.state.message} className="form-control btn" type="submit" value="Send" />
 			</form>
 		)
 	}
