@@ -22,6 +22,10 @@
         font-weight: 700;
 
         .vote-options {
+          .active-vote {
+            border-bottom: 2px solid;
+          }
+
           .fa-check {
             color: green;
           }
