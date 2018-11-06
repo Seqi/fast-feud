@@ -71,7 +71,7 @@ gulp.task('scripts', function() {
 			})
 		)
 		.pipe(
-			gulp.src(['node_modules/bootstrap/build/js/bootstrap.min.js', 'node_modules/jquery/build/jquery.min.js'], {
+			gulp.src(['node_modules/bootstrap/dist/js/bootstrap.min.js', 'node_modules/jquery/dist/jquery.min.js'], {
 				passthrough: true
 			})
 		)
@@ -79,8 +79,7 @@ gulp.task('scripts', function() {
 })
 
 gulp.task('fonts', function() {
-	return gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.*')
-		.pipe(gulp.dest(paths.buildFontFolder))
+	return gulp.src('node_modules/font-awesome/fonts/fontawesome-webfont.*').pipe(gulp.dest(paths.buildFontFolder))
 })
 
 gulp.task('styles', function() {
@@ -93,7 +92,7 @@ gulp.task('styles', function() {
 			gulp.src(
 				[
 					'node_modules/font-awesome/css/font-awesome.min.css',
-					'node_modules/bootstrap/build/css/bootstrap.min.css'
+					'node_modules/bootstrap/dist/css/bootstrap.min.css'
 				],
 				{ passthrough: true }
 			)
@@ -113,8 +112,7 @@ gulp.task('images', function() {
 })
 
 gulp.task('html', function() {
-	return gulp.src([paths.page, paths.icon])
-		.pipe(gulp.dest(paths.buildFolder))
+	return gulp.src([paths.page, paths.icon]).pipe(gulp.dest(paths.buildFolder))
 })
 
 gulp.task('copy', gulp.parallel('scripts', 'html', 'styles', 'fonts', 'images'))
@@ -153,15 +151,14 @@ gulp.task('inject', function() {
 gulp.task('build', gulp.series('clean', 'copy', 'inject'))
 
 gulp.task('serve', function() {
-	return gulp.src(paths.buildFolder)
-		.pipe(
-			webserver({
-				port: 3100,
-				livereload: true,
-				open: true,
-				fallback: 'index.html'
-			})
-		)
+	return gulp.src(paths.buildFolder).pipe(
+		webserver({
+			port: 3100,
+			livereload: true,
+			open: true,
+			fallback: 'index.html'
+		})
+	)
 })
 
 gulp.task('watch', function() {
