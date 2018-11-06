@@ -19,8 +19,7 @@ module.exports = server => {
 			let users = socketutils.getAllUsersInSocketsRoom(io, socket)
 
 			//TODO : User added/removed to only require one user adding/subtracting
-			io.to(socket.roomName)
-				.emit('voters-updated', users)
+			io.to(socket.roomName).emit('voters-updated', users)
 
 			// If no one is in the room, make admin
 			if (users.length <= 1) {
@@ -54,10 +53,9 @@ module.exports = server => {
 
 			let users = socketutils.getAllUsersInSocketsRoom(io, socket)
 
-			io.to(socket.roomName)
-				.emit('voters-updated', users)
-			socket.broadcast.to(socket.roomName)
-				.emit('business-updated', business)
+			io.to(socket.roomName).emit('voters-updated', users)
+			io.to(socket.roomName).emit('votes-reset')
+			socket.broadcast.to(socket.roomName).emit('business-updated', business)
 		})
 
 		socket.on('options', options => {
@@ -72,12 +70,11 @@ module.exports = server => {
 			}
 
 			socket.vote = vote.vote
-			log(socket, `New vote: ${vote}`)
+			log(socket, `New vote: ${vote.vote}`)
 
 			// Send back new votes
 			let users = socketutils.getAllUsersInSocketsRoom(io, socket)
-			socket.broadcast.to(socket.roomName)
-				.emit('voters-updated', users)
+			socket.broadcast.to(socket.roomName).emit('voters-updated', users)
 		})
 
 		socket.on('set-nickname', nickname => {
@@ -86,25 +83,22 @@ module.exports = server => {
 
 			// Send back new user list
 			let users = socketutils.getAllUsersInSocketsRoom(io, socket)
-			io.to(socket.roomName)
-				.emit('voters-updated', users)
+			io.to(socket.roomName).emit('voters-updated', users)
 		})
 
 		socket.on('message', msg => {
 			log(socket, 'New message sent.')
-			io.to(socket.roomName)
-				.emit('message', {
-					id: socket.id,
-					nickname: socket.nickname,
-					message: msg
-				})
+			io.to(socket.roomName).emit('message', {
+				id: socket.id,
+				nickname: socket.nickname,
+				message: msg
+			})
 		})
 
 		socket.on('disconnect', () => {
 			log(socket, 'Disconnected')
 			let users = socketutils.getAllUsersInSocketsRoom(io, socket)
-			io.to(socket.roomName)
-				.emit('voters-updated', users)
+			io.to(socket.roomName).emit('voters-updated', users)
 
 			// If the admin disconnects, reassign admin role
 			if (socket.isAdmin) {

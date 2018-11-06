@@ -8,6 +8,10 @@ class SelfVote extends React.Component {
 		this.state = {
 			vote: this.props.vote ? this.props.vote.vote : null
 		}
+
+		this.props.socket.on('votes-reset', () => {
+			this.setState({ vote: null })
+		})
 	}
 
 	changeVote(vote) {
@@ -16,20 +20,22 @@ class SelfVote extends React.Component {
 			vote = null
 		}
 
-		this.setState({ vote }, () =>
-			this.props.socket.emit('vote', { id: this.props.socket.id, vote })
-		)
+		this.setState({ vote }, () => this.props.socket.emit('vote', { id: this.props.socket.id, vote }))
 	}
 
 	render() {
 		return (
 			<div className="vote-container self">
-				<span>
-					{this.props.vote.nickname || this.props.vote.id}
-				</span>
+				<span>{this.props.vote.nickname || this.props.vote.id}</span>
 				<div className="vote-options">
-					<i onClick={() => this.changeVote(true)} className={`fa fa-check ${this.state.vote === true ? 'active-vote' : ''}`} />
-					<i onClick={() => this.changeVote(false)} className={`fa fa-close ${this.state.vote === false ? 'active-vote' : ''}`} />
+					<i
+						onClick={() => this.changeVote(true)}
+						className={`fa fa-check ${this.state.vote === true ? 'active-vote' : ''}`}
+					/>
+					<i
+						onClick={() => this.changeVote(false)}
+						className={`fa fa-close ${this.state.vote === false ? 'active-vote' : ''}`}
+					/>
 				</div>
 			</div>
 		)
