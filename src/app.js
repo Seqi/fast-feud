@@ -12,6 +12,10 @@ app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.use('/food', require('./routes/yelp.routes'))
 
+app.get('/ping', (req, res) => {
+	res.send('pong')
+})
+
 app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, 'client/build/index.html'))
 })
