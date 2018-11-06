@@ -8,7 +8,7 @@ export default class Chat extends React.Component {
 		return (
 			<div className="chat-container">
 				<ChatLog />
-				<ChatEntry />                
+				<ChatEntry />
 			</div>
 		)
 	}

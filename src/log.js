@@ -1,5 +1,6 @@
 module.exports = (socket, msg) => {
-	let date = new Date().toLocaleString()
+	let date = new Date()
+		.toLocaleString()
 
 	let socketInfo = ''
 	if (socket) {

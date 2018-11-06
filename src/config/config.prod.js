@@ -1,3 +1,3 @@
 module.exports = {
-    "yelp_apikey": process.env.YELP_APIKEY
+	'yelp_apikey': process.env.YELP_APIKEY
 }

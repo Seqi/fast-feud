@@ -4,7 +4,6 @@ import { withSocket } from '@shared/hocs/SocketContext'
 import ChatMessage from './ChatMessage'
 
 class ChatLog extends React.Component {
-
 	constructor(props) {
 		super(props)
 
@@ -17,7 +16,7 @@ class ChatLog extends React.Component {
 			this.scrollToBottom()
 		})
 
-		this.props.socket.on('voters-updated', _ => {
+		this.props.socket.on('voters-updated', () => {
 			this.scrollToBottom()
 		})
 	}
@@ -26,11 +25,13 @@ class ChatLog extends React.Component {
 		let chatlog = document.getElementsByClassName('chat-log')[0]
 		chatlog.scrollTop = chatlog.scrollHeight
 	}
-    
+
 	render() {
 		return (
 			<div className="chat-log">
-				{ this.state.chatLog.map((msg, idx) => <ChatMessage key={idx} msg={msg} />) }
+				{this.state.chatLog.map((msg, idx) => (
+					<ChatMessage key={idx} msg={msg} />
+				))}
 			</div>
 		)
 	}

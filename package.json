@@ -1,19 +1,25 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.4",
-    "express": "^4.16.3",
-    "request": "^2.87.0",
-    "request-promise-native": "^1.0.5",
-    "socket.io": "^2.1.1"
-  }
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon src/app.js",
+        "lint": "eslint ./**/*.js",
+        "lint-fix": "eslint **/*.js --fix",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.4",
+        "express": "^4.16.3",
+        "request": "^2.87.0",
+        "request-promise-native": "^1.0.5",
+        "socket.io": "^2.1.1"
+    },
+    "devDependencies": {
+        "eslint": "^5.8.0",
+        "eslint-plugin-react": "7.10.0"
+    }
 }
