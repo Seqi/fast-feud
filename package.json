@@ -8,7 +8,7 @@
 		"lint": "eslint ./**/*.js",
 		"lint-fix": "eslint **/*.js --fix",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"gcp-build": "cd src/client && npm install --prod && npm run build"
+		"gcp-build": "cd src/client && npm install && npm run build"
 	},
 	"author": "",
 	"license": "ISC",
