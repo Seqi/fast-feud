@@ -8,8 +8,7 @@
 		"lint": "eslint ./**/*.js",
 		"lint-fix": "eslint **/*.js --fix",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"heroku-prebuild": "cd src/client && npm i && npm run build",
-		"heroku-postbuild": "npm prune --production && cd src/client && npm prune --production"
+		"gcp-build": "cd src/site && npm install --prod && npm run build"
 	},
 	"author": "",
 	"license": "ISC",
