@@ -1,1 +1,4 @@
 runtime: nodejs8
+env_variables:
+    YELP_APIKEY: __YELP_APIKEY__
+    GOOGLEMAPS_APIKEY: __GOOGLEMAPS_APIKEY__

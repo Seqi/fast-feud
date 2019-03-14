@@ -7,8 +7,11 @@ script: echo 'No steps necessary'
 before_install:
     - openssl aes-256-cbc -K $encrypted_e9bf16b6bb67_key -iv $encrypted_e9bf16b6bb67_iv -in client-secret.json.enc -out
       client-secret.json -d
+before_deploy:
+    - node deploy/env.js YELP_APIKEY $YELP_APIKEY GOOGLEMAPS_APIKEY $GOOGLEMAPS_APIKEY
 deploy:
     provider: gae
     keyfile: client-secret.json
     project: fast-feud
+    skip_cleanup: true
     on: release
