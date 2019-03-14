@@ -36,7 +36,7 @@ export default class HomePage extends React.Component {
 										pathname: this.state.id, 
 										state: { location: this.state.location } 
 									}}>
-										<button className="btn" type="submit">
+										<button className="btn btn-secondary" type="submit">
                                             Search
 										</button>
 									</Link>

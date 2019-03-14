@@ -51,7 +51,7 @@ class Options extends React.Component {
 	}
 
 	toggleOptions() {
-		this.setState({showOptions: !this.state.showOptions })
+		this.setState({ showOptions: !this.state.showOptions })
 
 		// Return true so we can method chain in the JSX, kinda hacky
 		return true
@@ -72,7 +72,7 @@ class Options extends React.Component {
 	render() {
 		return (
 			<div className="container">
-				<div className={`options-container ${!this.state.showOptions? 'invisible' : undefined }` }>
+				<div className={`options-container ${!this.state.showOptions ? 'invisible' : undefined}`}>
 					<div className="form-row">
 						<div className="form-group col-md-8">
 							<label>Location</label>
@@ -91,7 +91,7 @@ class Options extends React.Component {
 								id="radius"
 								value={this.state.radius || ''}
 								type="number"
-								min="0"								
+								min="0"
 								onChange={evt => this.setOption(evt)}
 								className={`form-control ${this.isRadiusValid() ? '' : 'error'}`}
 							/>
@@ -131,10 +131,10 @@ class Options extends React.Component {
 					<div className="btn-row">
 						<div className="col-xs-12">
 							<input
-								className="btn"
+								className="btn btn-secondary"
 								type="button"
 								value="Save"
-								disabled={!this.isStateValid()} 
+								disabled={!this.isStateValid()}
 								onClick={() => this.toggleOptions() && this.props.setOptions(this.state)}
 							/>
 						</div>
