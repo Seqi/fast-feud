@@ -3,6 +3,6 @@ import ReactDOM from 'react-dom'
 
 import App from '@core/App'
 
-ReactDOM.render((
-	<App />
-), document.getElementById('app'))
+console.log('envs', process.env)
+
+ReactDOM.render(<App />, document.getElementById('app'))
