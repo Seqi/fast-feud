@@ -1,7 +1,6 @@
 import React from 'react'
 import { Manager } from 'socket.io-client'
 
-import config from '@config'
 import { Error } from '@shared/components'
 import { SocketContext } from '@shared/hocs/SocketContext'
 
@@ -10,11 +9,10 @@ import Options, { DefaultOptions } from '@features/Options/Options'
 import Users from '@features/Users/Users'
 
 export default class Room extends React.Component {
-
 	constructor(props) {
 		super(props)
 
-		let socketManager = new Manager(config.apiUrl, { autoConnect: false,  query: `roomId=${this.props.match.params.id}` })
+		let socketManager = new Manager('/', { autoConnect: false, query: `roomId=${this.props.match.params.id}` })
 
 		this.state = {
 			id: this.props.match.params.id,
@@ -62,7 +60,7 @@ export default class Room extends React.Component {
 	}
 
 	setOptions(options, update = true) {
-		this.setState({options}, () => {
+		this.setState({ options }, () => {
 			// Store the options on the socket
 			update || this.props.socket.emit('options', this.state.options)
 		})
@@ -76,7 +74,7 @@ export default class Room extends React.Component {
 				<SocketContext.Provider value={this.state.socket}>
 					<div className="row no-gutters ignore-spacer">
 						<div className="col-xl business-panel">
-							<Business isAdmin={this.state.isAdmin} options={this.state.options} />						
+							<Business isAdmin={this.state.isAdmin} options={this.state.options} />
 						</div>
 
 						<div className="col-xl-2 user-panel">
