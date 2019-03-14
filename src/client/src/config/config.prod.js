@@ -1,3 +1,3 @@
 module.exports = {
-	mapsApiKey: process.env.GOOGLEMAPS_APIKEY
+	mapsApiKey: process.env.REACT_APP_GOOGLEMAPS_APIKEY
 }
