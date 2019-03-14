@@ -12,7 +12,11 @@ export default class Room extends React.Component {
 	constructor(props) {
 		super(props)
 
-		let socketManager = new Manager('/', { autoConnect: false, query: `roomId=${this.props.match.params.id}` })
+		let socketManager = new Manager('/', {
+			autoConnect: false,
+			secure: true,
+			query: `roomId=${this.props.match.params.id}`
+		})
 
 		this.state = {
 			id: this.props.match.params.id,
