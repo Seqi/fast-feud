@@ -1,4 +1,4 @@
-let http = require('http')
+let https = require('https')
 let path = require('path')
 let cors = require('cors')
 let express = require('express')
@@ -20,7 +20,7 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, 'client/build/index.html'))
 })
 
-let httpServer = http.createServer(app)
+let httpServer = https.createServer(app)
 initSockets(httpServer)
 
 let server = httpServer.listen(process.env.PORT || 4500, () => {
